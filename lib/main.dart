@@ -1,8 +1,12 @@
+import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:munchkin/components/button.dart';
+import 'package:munchkin/cubit/game_observer.dart';
+import 'package:munchkin/ui/app_theme.dart';
+import 'package:munchkin/ui/route_generator.dart';
+import 'package:munchkin/ui/splash_page.dart/splash_page.dart';
 
 void main() {
+  Bloc.observer = GameObserver();
   runApp(MyApp());
 }
 
@@ -10,60 +14,12 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-        visualDensity: VisualDensity.adaptivePlatformDensity,
-      ),
-      home: MyHomePage(title: 'Flutter Demo Home Page'),
-    );
-  }
-}
-
-class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key, this.title}) : super(key: key);
-
-  final String title;
-
-  @override
-  _MyHomePageState createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    HapticFeedback.lightImpact();
-    setState(() {
-      _counter++;
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.brown.shade300,
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: <Widget>[
-            Text('MUNCHKIN',
-                style: TextStyle(fontFamily: 'Quasimodo', fontSize: 60)),
-            Text('$_counter',
-                style: TextStyle(fontFamily: 'Quasimodo', fontSize: 60)),
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 10),
-              child: FancyButton(
-                child: Text('Tap to start',
-                    style: TextStyle(fontFamily: 'Quasimodo', fontSize: 24)),
-                color: Colors.green,
-                size: 50,
-                onPressed: _incrementCounter,
-              ),
-            ),
-          ],
-        ),
-      ),
+      debugShowCheckedModeBanner: false,
+      title: 'Munchkin Level Counter',
+      initialRoute: '/welcome',
+      onGenerateRoute: RouteGenerator.generateRoute,
+      theme: AppTheme.getTheme(isLight: false),
+      home: SplashPage(),
     );
   }
 }
