@@ -1,10 +1,11 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:munchkin/ui/screens/players_page/players_page.dart';
+import 'package:munchkin/ui/screens/players_page.dart';
 import 'package:munchkin/models/models.dart';
-import 'package:munchkin/ui/screens/settings_page/settings_page.dart';
+import 'package:munchkin/ui/screens/settings_page.dart';
 
 class MyHomePage extends StatefulWidget {
   MyHomePage({Key key}) : super(key: key);
@@ -29,6 +30,7 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Icon(
           diceIcon,
           color: Colors.white,
+          size: 30,
         ),
         backgroundColor: context.theme().accentColor,
         onPressed: throwDice,
@@ -72,10 +74,14 @@ class _MyHomePageState extends State<MyHomePage> {
       return FontAwesomeIcons.diceFour;
     else if (dice == 5)
       return FontAwesomeIcons.diceFive;
-    else if (dice == 6) return FontAwesomeIcons.diceSix;
+    else
+      return FontAwesomeIcons.diceSix;
   }
 
-  void throwDice() => setState(() {
-        dice = new Random().nextInt(6) + 1;
-      });
+  void throwDice() {
+    HapticFeedback.heavyImpact();
+    setState(() {
+      dice = new Random().nextInt(6) + 1;
+    });
+  }
 }

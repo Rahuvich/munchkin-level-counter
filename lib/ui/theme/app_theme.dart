@@ -65,6 +65,7 @@ class AppTheme {
     return baseTheme.copyWith(
         centerTitle: true,
         iconTheme: iconTheme,
+        elevation: 0,
         brightness: isLight ? Brightness.light : Brightness.dark,
         color: isLight ? kPrimaryColor : kPrimaryColorDark,
         textTheme: textTheme ?? baseTheme.textTheme);
@@ -89,7 +90,7 @@ class AppTheme {
         headline6: baseTheme.headline6.copyWith(
             color: isLight ? Colors.grey.shade900 : Colors.grey.shade200),
         headline4: baseTheme.headline4.copyWith(
-          color: isLight ? Colors.black : Colors.white,
+          color: kAccentColor,
           fontWeight: FontWeight.bold,
           fontSize: 25,
         ),

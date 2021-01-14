@@ -81,4 +81,11 @@ class GameCubit extends Cubit<GameState> {
 
     emit(this.state.copyWith(players: List.unmodifiable(list)));
   }
+
+  void shufflePlayers() {
+    List<Player> list = List.from(this.state.players);
+    list.shuffle();
+
+    emit(this.state.copyWith(players: List.unmodifiable(list)));
+  }
 }

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:munchkin/ui/screens/home_page/home_page.dart';
-import 'package:munchkin/ui/screens/splash_page.dart/splash_page.dart';
+import 'package:munchkin/ui/screens/home_page.dart';
+import 'package:munchkin/ui/screens/splash_page.dart';
 
 class RouteGenerator {
   static Route<dynamic> generateRoute(RouteSettings settings) {
@@ -10,7 +10,7 @@ class RouteGenerator {
     switch (settings.name) {
       case '/':
         return MaterialPageRoute(builder: (_) => MyHomePage());
-      case '/welcome':
+      case 'welcome':
         return MaterialPageRoute(builder: (_) => SplashPage());
 
       default:
