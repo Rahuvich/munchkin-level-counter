@@ -26,7 +26,7 @@ class SplashPage extends StatelessWidget {
                 color: context.theme().accentColor,
                 size: 50,
                 onPressed: () =>
-                    Navigator.of(context).pushReplacementNamed('/home'),
+                    Navigator.of(context).pushReplacementNamed('/'),
               ),
             ),
           ],

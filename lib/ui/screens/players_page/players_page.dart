@@ -27,7 +27,7 @@ class PlayersView extends StatelessWidget {
               'Players',
               style: context.theme().textTheme.headline3,
             ),
-            BlocBuilder<GameCubit, GameplayState>(
+            BlocBuilder<GameCubit, GameState>(
               builder: (context, state) {
                 return ListView(
                   shrinkWrap: true,
@@ -72,7 +72,8 @@ class PlayerItem extends StatelessWidget {
             color: context.theme().accentColor,
             child: Icon(Icons.expand_less),
             size: 20,
-            onPressed: () => context.read<GameCubit>().addLevelToPlayer(player.id,1),
+            onPressed: () =>
+                context.read<GameCubit>().addLevelToPlayer(player.id, 1),
           )
         ],
       ),

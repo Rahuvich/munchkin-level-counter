@@ -1,7 +1,7 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:munchkin/logic/cubit/game_cubit.dart';
 import 'package:bloc_test/bloc_test.dart';
-import 'package:munchkin/models/munchkin.dart';
+import 'package:munchkin/models/models.dart';
 
 void main() {
   group('Gameplay Cubit', () {
@@ -23,7 +23,7 @@ void main() {
         build: () => gameCubit,
         act: (GameCubit cubit) => cubit.addPlayer('Cam', id: 'id'),
         expect: [
-          GameplayState(players: [
+          GameState(players: [
             Player(
                 id: 'id', name: 'Cam', gender: Gender.MALE, level: 1, gear: 0)
           ])
@@ -34,7 +34,7 @@ void main() {
           build: () => gameCubit..addPlayer('Cam', id: 'id'),
           act: (GameCubit cubit) => cubit.addLevelToPlayer('id', 1),
           expect: [
-            GameplayState(players: [Player(id: 'id', name: 'Cam', level: 2)])
+            GameState(players: [Player(id: 'id', name: 'Cam', level: 2)])
           ]);
 
       blocTest('level down the player',
@@ -43,7 +43,7 @@ void main() {
             ..addLevelToPlayer('id', 1),
           act: (GameCubit cubit) => cubit.addLevelToPlayer('id', -1),
           expect: [
-            GameplayState(players: [Player(id: 'id', name: 'Cam', level: 1)])
+            GameState(players: [Player(id: 'id', name: 'Cam', level: 1)])
           ]);
 
       blocTest('Minimum level a player can have is set to default',
@@ -57,7 +57,7 @@ void main() {
           build: () => gameCubit..addPlayer('Cam', id: 'id'),
           act: (GameCubit cubit) => cubit.addGearToPlayer('id', 1),
           expect: [
-            GameplayState(players: [Player(id: 'id', name: 'Cam', gear: 1)])
+            GameState(players: [Player(id: 'id', name: 'Cam', gear: 1)])
           ]);
 
       blocTest('gear down the player',
@@ -66,7 +66,7 @@ void main() {
             ..addGearToPlayer('id', 1),
           act: (GameCubit cubit) => cubit.addGearToPlayer('id', -1),
           expect: [
-            GameplayState(players: [Player(id: 'id', name: 'Cam', gear: 0)])
+            GameState(players: [Player(id: 'id', name: 'Cam', gear: 0)])
           ]);
 
       blocTest('Minimum gear a player can have is set to default',
@@ -80,9 +80,9 @@ void main() {
         act: (GameCubit cubit) =>
             cubit..toggleGenderOfPlayer('id')..toggleGenderOfPlayer('id'),
         expect: [
-          GameplayState(
+          GameState(
               players: [Player(id: 'id', name: 'Cam', gender: Gender.FEMALE)]),
-          GameplayState(
+          GameState(
               players: [Player(id: 'id', name: 'Cam', gender: Gender.MALE)])
         ]);
 
@@ -93,7 +93,7 @@ void main() {
           ..addGearToPlayer('id', 1),
         act: (GameCubit cubit) => cubit..resetPlayer('id'),
         expect: [
-          GameplayState(players: [
+          GameState(players: [
             Player(id: 'id', name: 'Cam', level: 1, gear: 0),
           ]),
         ]);
@@ -101,7 +101,7 @@ void main() {
     blocTest('Remove a player',
         build: () => gameCubit..addPlayer('Temp', id: 'temp_id'),
         act: (GameCubit cubit) => cubit..removePlayer('temp_id'),
-        expect: [GameplayState(players: [])]);
+        expect: [GameState(players: [])]);
 
     blocTest('Kill the player',
         build: () => gameCubit
@@ -110,8 +110,7 @@ void main() {
           ..addGearToPlayer('id', 1),
         act: (GameCubit cubit) => cubit.killPlayer('id'),
         expect: [
-          GameplayState(
-              players: [Player(id: 'id', name: 'Cam', level: 2, gear: 0)])
+          GameState(players: [Player(id: 'id', name: 'Cam', level: 2, gear: 0)])
         ]);
 
     blocTest('Reset all the players',
@@ -124,7 +123,7 @@ void main() {
           ..addGearToPlayer('temp_id', 1),
         act: (GameCubit cubit) => cubit.resetPlayers(),
         expect: [
-          GameplayState(players: [
+          GameState(players: [
             Player(id: 'id', name: 'Cam'),
             Player(id: 'temp_id', name: 'Temp')
           ]),

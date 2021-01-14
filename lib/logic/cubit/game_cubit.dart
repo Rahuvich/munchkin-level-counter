@@ -1,13 +1,13 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:munchkin/models/munchkin.dart';
+import 'package:munchkin/models/models.dart';
 import 'package:uuid/uuid.dart';
 import 'dart:math' as math;
 
 part 'game_state.dart';
 
-class GameCubit extends Cubit<GameplayState> {
-  GameCubit() : super(GameplayState(players: []));
+class GameCubit extends Cubit<GameState> {
+  GameCubit() : super(GameState(players: []));
 
   void addPlayer(String name, {String id}) => emit(this.state.copyWith(
       players: List.unmodifiable([]
@@ -26,7 +26,7 @@ class GameCubit extends Cubit<GameplayState> {
       return player;
     }).toList();
 
-    emit(GameplayState(players: List.unmodifiable(list)));
+    emit(this.state.copyWith(players: List.unmodifiable(list)));
   }
 
   void addGearToPlayer(String id, int count) {
@@ -37,7 +37,7 @@ class GameCubit extends Cubit<GameplayState> {
       return player;
     }).toList();
 
-    emit(GameplayState(players: List.unmodifiable(list)));
+    emit(this.state.copyWith(players: List.unmodifiable(list)));
   }
 
   void toggleGenderOfPlayer(String id) {
@@ -49,7 +49,7 @@ class GameCubit extends Cubit<GameplayState> {
       return player;
     }).toList();
 
-    emit(GameplayState(players: List.unmodifiable(list)));
+    emit(this.state.copyWith(players: List.unmodifiable(list)));
   }
 
   void killPlayer(String id) {
@@ -60,7 +60,7 @@ class GameCubit extends Cubit<GameplayState> {
       return player;
     }).toList();
 
-    emit(GameplayState(players: List.unmodifiable(list)));
+    emit(this.state.copyWith(players: List.unmodifiable(list)));
   }
 
   void resetPlayer(String id) {
@@ -71,7 +71,7 @@ class GameCubit extends Cubit<GameplayState> {
       return player;
     }).toList();
 
-    emit(GameplayState(players: List.unmodifiable(list)));
+    emit(this.state.copyWith(players: List.unmodifiable(list)));
   }
 
   void resetPlayers() {
@@ -79,6 +79,6 @@ class GameCubit extends Cubit<GameplayState> {
       return player.copyWith(gear: 0, level: 1);
     }).toList();
 
-    emit(GameplayState(players: List.unmodifiable(list)));
+    emit(this.state.copyWith(players: List.unmodifiable(list)));
   }
 }

@@ -1,6 +1,6 @@
 import 'package:equatable/equatable.dart';
 
-enum Gender { MALE, FEMALE }
+import 'constants.dart';
 
 class Player extends Equatable {
   final String id;

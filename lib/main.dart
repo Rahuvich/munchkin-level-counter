@@ -1,7 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:munchkin/logic/cubit/game_observer.dart';
-import 'package:munchkin/ui/app_theme.dart';
+import 'package:munchkin/ui/theme/app_theme.dart';
 import 'package:munchkin/ui/router/route_generator.dart';
 
 void main() {

@@ -1,16 +1,16 @@
 part of 'game_cubit.dart';
 
-class GameplayState extends Equatable {
+class GameState extends Equatable {
   final List<Player> players;
-  const GameplayState({this.players});
+  const GameState({this.players});
 
   @override
   List<Object> get props => [players];
 
-  GameplayState copyWith({
+  GameState copyWith({
     List<Player> players,
   }) {
-    return GameplayState(
+    return GameState(
       players: players ?? this.players,
     );
   }
