@@ -1,11 +1,10 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:munchkin/ui/components/button.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:munchkin/ui/players_page/players_page.dart';
+import 'package:munchkin/ui/screens/players_page/players_page.dart';
 import 'package:munchkin/models/models.dart';
-import 'package:munchkin/ui/settings_page/settings_page.dart';
+import 'package:munchkin/ui/screens/settings_page/settings_page.dart';
 
 class MyHomePage extends StatefulWidget {
   MyHomePage({Key key}) : super(key: key);

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:munchkin/cubit/game_cubit.dart';
+import 'package:munchkin/logic/cubit/game_cubit.dart';
 import 'package:munchkin/models/models.dart';
 import 'package:munchkin/ui/components/button.dart';
 
@@ -52,11 +52,12 @@ class PlayerItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListTile(
       leading: Icon(
-        player.male == Gender.MALE
+        player.gender == Gender.MALE
             ? FontAwesomeIcons.mars
             : FontAwesomeIcons.venus,
-        color:
-            player.male == Gender.MALE ? Colors.blueAccent : Colors.pinkAccent,
+        color: player.gender == Gender.MALE
+            ? Colors.blueAccent
+            : Colors.pinkAccent,
       ),
       title: Text(
         player.name,
@@ -71,7 +72,7 @@ class PlayerItem extends StatelessWidget {
             color: context.theme().accentColor,
             child: Icon(Icons.expand_less),
             size: 20,
-            onPressed: () => context.read<GameCubit>().levelUpPlayer(player.id),
+            onPressed: () => context.read<GameCubit>().addLevelToPlayer(player.id,1),
           )
         ],
       ),
