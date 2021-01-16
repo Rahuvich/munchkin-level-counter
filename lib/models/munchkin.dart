@@ -2,23 +2,31 @@ import 'package:equatable/equatable.dart';
 
 import 'constants.dart';
 
-class Player extends Equatable {
+abstract class PlayerBase extends Equatable {
   final String id;
   final String name;
   final Gender gender;
   final int level;
   final int gear;
-  int get strength => level + gear;
-  Player({
-    this.id,
-    this.name,
-    this.gear = 0,
-    this.level = 1,
-    this.gender = Gender.MALE,
-  });
+  PlayerBase({this.id, this.name, this.gender, this.level, this.gear});
+
+  int get strength;
 
   @override
-  List<Object> get props => [id, name, gender, level, gear];
+  List<Object> get props;
+
+  @override
+  bool get stringify;
+}
+
+class Player extends PlayerBase {
+  Player({
+    String id,
+    String name,
+    Gender gender = Gender.MALE,
+    int level = 1,
+    int gear = 0,
+  }) : super(gear: gear, level: level, gender: gender, id: id, name: name);
 
   Player copyWith({
     String id,
@@ -37,77 +45,87 @@ class Player extends Equatable {
   }
 
   @override
+  int get strength => level + gear;
+
+  @override
+  List<Object> get props => [id, name, gender, level, gear];
+
+  @override
   bool get stringify => true;
 }
 
-abstract class PlayerDecorator implements Player {
+/* 
+abstract class PlayerDecorator extends PlayerBase {
   final Player player;
   PlayerDecorator({this.player});
+
+  @override
+  int get strength => player.strength;
+
+  @override
+  List<Object> get props => player.props;
+
+  @override
+  bool get stringify => player.stringify;
 }
 
 class PlayerInBattle extends PlayerDecorator {
-  @override
-  int gear;
+  PlayerInBattle({Player player, this.modifier = 0, this.ally})
+      : super(player: player);
 
-  @override
-  int level;
+  final int modifier;
 
-  @override
-  Gender gender;
-
-  @override
-  String name;
-
-  int modifier;
-
-  Player ally;
+  final Player ally;
 
   @override
   int get strength => player.strength + modifier + ally?.strength ?? 0;
 
   @override
-  String id;
-
-  PlayerInBattle({
-    this.gear,
-    this.level,
-    this.gender,
-    this.name,
-    this.modifier,
-    this.ally,
-    this.id,
-  });
+  List<Object> get props => List.from([
+        [modifier, ally]
+      ]..addAll(player.props));
 
   @override
-  List<Object> get props => [player, gear, level, name, modifier, ally];
-
-  @override
-  bool get stringify => throw UnimplementedError();
+  bool get stringify => player.stringify;
 
   PlayerInBattle copyWith({
-    int gear,
-    int level,
-    Gender gender,
-    String name,
+    Player player,
     int modifier,
     Player ally,
-    String id,
   }) {
     return PlayerInBattle(
-      gear: gear ?? this.gear,
-      level: level ?? this.level,
-      gender: gender ?? this.gender,
-      name: name ?? this.name,
+      player: player,
       modifier: modifier ?? this.modifier,
       ally: ally ?? this.ally,
-      id: id ?? this.id,
     );
   }
 }
-
-class Monster {
-  int level;
-  int modifiers;
-  int treasures;
+ */
+class Monster extends Equatable {
+  final String id;
+  final int level;
+  final int modifiers;
+  final int treasures;
+  Monster({this.id, this.level, this.modifiers, this.treasures});
   int get strength => level + modifiers;
+
+  @override
+  List<Object> get props => [id, level, modifiers, treasures];
+
+  @override
+  bool get stringify => true;
+
+  Monster copyWith({
+    String id,
+    int level = 1,
+    int modifiers = 0,
+    int treasures = 0,
+  }) {
+    return Monster(
+      id: id ?? this.id,
+      level: level ?? this.level,
+      modifiers: modifiers ?? this.modifiers,
+      treasures: treasures ?? this.treasures,
+    );
+  }
 }
