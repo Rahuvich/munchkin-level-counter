@@ -9,7 +9,11 @@ import 'package:flutter_color/flutter_color.dart';
 class PlayerTile extends StatelessWidget {
   final Player player;
   final bool forceExpanded;
-  PlayerTile({this.player, this.forceExpanded = false});
+  final VoidCallback onBattle;
+  PlayerTile(
+      {@required this.player,
+      @required this.onBattle,
+      this.forceExpanded = false});
 
   @override
   Widget build(BuildContext context) {
@@ -61,8 +65,7 @@ class PlayerTile extends StatelessWidget {
               ),
               size: 30,
               color: context.theme().accentColor,
-              onPressed: () =>
-                  context.read<GameCubit>().addGearToPlayer(player.id, -1),
+              onPressed: () => onBattle.call(),
             ),
             FancyButton(
               child: Icon(FontAwesomeIcons.skull),

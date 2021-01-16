@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:munchkin/ui/screens/battle_page.dart';
 import 'package:munchkin/ui/screens/players_page.dart';
 import 'package:munchkin/models/models.dart';
 import 'package:munchkin/ui/screens/settings_page.dart';
@@ -16,17 +17,43 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int currentTab = 0;
   int dice = 1;
-  final List<Widget> screens = [
-    PlayersPage(),
-    SettingsPage(),
-  ];
+  List<Widget> screens;
+  int currentPage = 0;
+
+  PageController _pageController;
+
+  @override
+  void initState() {
+    super.initState();
+
+    _pageController = PageController(initialPage: currentPage, keepPage: true);
+
+    screens = [
+      PlayersPage(
+        onBattle: () => _pageController.animateToPage(1,
+            duration: Duration(milliseconds: 200), curve: Curves.easeInOut),
+      ),
+      BattlePage(
+        onBack: () => _pageController.animateToPage(0,
+            duration: Duration(milliseconds: 200), curve: Curves.easeInOut),
+      ),
+      SettingsPage(),
+    ];
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: screens[currentTab],
+      body: PageView(
+        children: screens,
+        onPageChanged: (index) => setState(() {
+          FocusScope.of(context).unfocus();
+          currentPage = index;
+        }),
+        physics: NeverScrollableScrollPhysics(),
+        controller: _pageController,
+      ),
       floatingActionButton: FloatingActionButton(
         child: Icon(
           diceIcon,
@@ -47,25 +74,21 @@ class _MyHomePageState extends State<MyHomePage> {
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
               IconButton(
-                icon: Icon(CupertinoIcons.person_2_fill),
-                color: currentTab == 0
-                    ? Colors.white
-                    : context.theme().disabledColor,
-                onPressed: () => setState(() {
-                  currentTab = 0;
-                }),
-              ),
+                  icon: Icon(CupertinoIcons.person_2_fill),
+                  color: currentPage == 0
+                      ? Colors.white
+                      : context.theme().disabledColor,
+                  onPressed: () => _pageController.jumpToPage(
+                        0,
+                      )),
               IconButton(
-                icon: Icon(
-                  CupertinoIcons.slider_horizontal_3,
-                ),
-                color: currentTab == 1
-                    ? Colors.white
-                    : context.theme().disabledColor,
-                onPressed: () => setState(() {
-                  currentTab = 1;
-                }),
-              ),
+                  icon: Icon(
+                    CupertinoIcons.slider_horizontal_3,
+                  ),
+                  color: currentPage == 2
+                      ? Colors.white
+                      : context.theme().disabledColor,
+                  onPressed: () => _pageController.jumpToPage(2)),
             ],
           ),
         ),

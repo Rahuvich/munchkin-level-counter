@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:munchkin/logic/cubit/game_cubit.dart';
 import 'package:munchkin/models/models.dart';
 import 'package:munchkin/ui/components/new_player.dart';
@@ -9,6 +8,8 @@ import 'package:munchkin/ui/components/players_settings_bottom.dart';
 import 'package:munchkin/ui/components/players_statistics_bottom.dart';
 
 class PlayersPage extends StatelessWidget {
+  final VoidCallback onBattle;
+  PlayersPage({@required this.onBattle});
   @override
   Widget build(BuildContext context) {
     final players =
@@ -55,6 +56,9 @@ class PlayersPage extends StatelessWidget {
           delegate: SliverChildListDelegate(players
               .map((player) => PlayerTile(
                     player: player,
+                    onBattle: () {
+                      onBattle.call();
+                    },
                   ))
               .toList()),
         ),
