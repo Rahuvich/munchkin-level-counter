@@ -88,14 +88,15 @@ class AppTheme {
   static TextTheme _getTextTheme(TextTheme baseTheme, bool isLight) {
     return baseTheme.copyWith(
         headline6: baseTheme.headline6.copyWith(
-            color: isLight ? Colors.grey.shade900 : Colors.grey.shade200),
+            color: isLight ? Colors.grey.shade900 : Colors.grey.shade400),
+        headline5: baseTheme.headline6.copyWith(
+            fontFamily: 'Quasimodo',
+            color: isLight ? Colors.grey.shade900 : Colors.grey.shade400),
         headline4: baseTheme.headline4.copyWith(
-          color: kAccentColor,
           fontWeight: FontWeight.bold,
           fontSize: 25,
         ),
         headline3: baseTheme.headline3.copyWith(
-          color: kAccentColor,
           fontFamily: 'Quasimodo',
           fontSize: 40,
         ),

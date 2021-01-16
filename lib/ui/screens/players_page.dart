@@ -1,17 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_color/flutter_color.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:munchkin/logic/cubit/game_cubit.dart';
 import 'package:munchkin/models/models.dart';
-import 'package:munchkin/ui/components/button.dart';
 import 'package:munchkin/ui/components/new_player.dart';
+import 'package:munchkin/ui/components/player_tile.dart';
+import 'package:munchkin/ui/components/players_settings_bottom.dart';
+import 'package:munchkin/ui/components/players_statistics_bottom.dart';
 
 class PlayersPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final players = context.select<GameCubit, List<Player>>(
-        (GameCubit bloc) => bloc.state.players);
+    final players =
+        context.select<GameCubit, List<Player>>((cubit) => cubit.state.players);
     return CustomScrollView(
       slivers: [
         SliverAppBar(
@@ -23,13 +24,25 @@ class PlayersPage extends StatelessWidget {
           ),
           actions: [
             IconButton(
-              icon: Icon(Icons.shuffle),
-              onPressed: () => context.read<GameCubit>().shufflePlayers(),
+              icon: Icon(Icons.bar_chart_rounded),
+              onPressed: () {
+                showModalBottomSheet(
+                  context: context,
+                  backgroundColor: Colors.transparent,
+                  builder: (context) => PlayersStatisticsBottom(),
+                );
+              },
             ),
             IconButton(
-              icon: Icon(Icons.replay),
-              onPressed: () => context.read<GameCubit>().resetPlayers(),
-            )
+              icon: Icon(Icons.tune_rounded),
+              onPressed: () {
+                showModalBottomSheet(
+                  context: context,
+                  backgroundColor: Colors.transparent,
+                  builder: (context) => PlayersSettingsBottomSheet(),
+                );
+              },
+            ),
           ],
         ),
         SliverToBoxAdapter(
@@ -39,47 +52,13 @@ class PlayersPage extends StatelessWidget {
           ),
         ),
         SliverList(
-          delegate: SliverChildListDelegate(
-              players.map((player) => PlayerItem(player: player)).toList()),
+          delegate: SliverChildListDelegate(players
+              .map((player) => PlayerTile(
+                    player: player,
+                  ))
+              .toList()),
         ),
       ],
-    );
-  }
-}
-
-class PlayerItem extends StatelessWidget {
-  final Player player;
-  PlayerItem({this.player});
-
-  @override
-  Widget build(BuildContext context) {
-    return Dismissible(
-      background:
-          Container(color: context.theme().scaffoldBackgroundColor.darker(5)),
-      onDismissed: (direction) =>
-          context.read<GameCubit>().removePlayer(player.id),
-      key: Key(player.id),
-      child: ListTile(
-        leading: FancyButton(
-          color: context.theme().accentColor,
-          size: 20,
-          onPressed: () =>
-              context.read<GameCubit>().toggleGenderOfPlayer(player.id),
-          child: Icon(
-            player.gender == Gender.MALE
-                ? FontAwesomeIcons.mars
-                : FontAwesomeIcons.venus,
-            color: player.gender == Gender.MALE
-                ? Colors.blueAccent
-                : Colors.pinkAccent,
-          ),
-        ),
-        title: Text(
-          player.name,
-          style: context.theme().textTheme.bodyText1,
-        ),
-        subtitle: Text('Level ${player.level} – Strength ${player.strength}'),
-      ),
     );
   }
 }

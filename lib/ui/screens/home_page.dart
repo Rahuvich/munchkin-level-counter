@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -41,21 +42,30 @@ class _MyHomePageState extends State<MyHomePage> {
         shape: CircularNotchedRectangle(),
         notchMargin: 7.0,
         child: Container(
+          height: kToolbarHeight,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
               IconButton(
-                icon: Icon(Icons.people),
+                icon: Icon(CupertinoIcons.person_2_fill),
+                color: currentTab == 0
+                    ? Colors.white
+                    : context.theme().disabledColor,
                 onPressed: () => setState(() {
                   currentTab = 0;
                 }),
               ),
               IconButton(
-                icon: Icon(Icons.settings),
+                icon: Icon(
+                  CupertinoIcons.slider_horizontal_3,
+                ),
+                color: currentTab == 1
+                    ? Colors.white
+                    : context.theme().disabledColor,
                 onPressed: () => setState(() {
                   currentTab = 1;
                 }),
-              )
+              ),
             ],
           ),
         ),

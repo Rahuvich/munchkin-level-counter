@@ -88,4 +88,6 @@ class GameCubit extends Cubit<GameState> {
 
     emit(this.state.copyWith(players: List.unmodifiable(list)));
   }
+
+  void restartGame() => emit(this.state.copyWith(players: []));
 }

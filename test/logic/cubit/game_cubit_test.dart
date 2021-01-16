@@ -103,6 +103,15 @@ void main() {
         act: (GameCubit cubit) => cubit..removePlayer('temp_id'),
         expect: [GameState(players: [])]);
 
+    blocTest('Restart the game',
+        build: () => gameCubit
+          ..addPlayer('Cam', id: 'id')
+          ..addPlayer('Temp', id: 'temp_id'),
+        act: (GameCubit cubit) => cubit.restartGame(),
+        expect: [
+          GameState(players: []),
+        ]);
+
     blocTest('Kill the player',
         build: () => gameCubit
           ..addPlayer('Cam', id: 'id')

@@ -7,14 +7,15 @@ class GameState extends Equatable {
   @override
   List<Object> get props => [players];
 
+  @override
+  bool get stringify => true;
+
   GameState copyWith({
     List<Player> players,
+    bool expandedMode,
   }) {
     return GameState(
       players: players ?? this.players,
     );
   }
-
-  @override
-  bool get stringify => true;
 }
