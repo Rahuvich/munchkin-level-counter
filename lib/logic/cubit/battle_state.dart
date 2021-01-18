@@ -5,17 +5,13 @@ class BattleState extends Equatable {
   final int modifiers;
   final Player ally;
 
-  int get playerStrength => player.strength + modifiers + (ally?.strength ?? 0);
-
   final List<Monster> monsters;
-  int get monstersStrength =>
-      monsters.fold(0, (sum, monster) => sum + monster.strength);
 
   const BattleState(
       {this.player, this.modifiers = 0, this.ally, this.monsters});
 
   @override
-  List<Object> get props => [player, monsters];
+  List<Object> get props => [player, modifiers, ally, monsters];
 
   @override
   bool get stringify => true;
@@ -33,4 +29,8 @@ class BattleState extends Equatable {
       monsters: monsters ?? this.monsters,
     );
   }
+
+  int get playerStrength => player.strength + modifiers + (ally?.strength ?? 0);
+  int get monstersStrength =>
+      monsters.fold(0, (sum, monster) => sum + monster.strength);
 }

@@ -54,59 +54,12 @@ class Player extends PlayerBase {
   bool get stringify => true;
 }
 
-/* 
-abstract class PlayerDecorator extends PlayerBase {
-  final Player player;
-  PlayerDecorator({this.player});
-
-  @override
-  int get strength => player.strength;
-
-  @override
-  List<Object> get props => player.props;
-
-  @override
-  bool get stringify => player.stringify;
-}
-
-class PlayerInBattle extends PlayerDecorator {
-  PlayerInBattle({Player player, this.modifier = 0, this.ally})
-      : super(player: player);
-
-  final int modifier;
-
-  final Player ally;
-
-  @override
-  int get strength => player.strength + modifier + ally?.strength ?? 0;
-
-  @override
-  List<Object> get props => List.from([
-        [modifier, ally]
-      ]..addAll(player.props));
-
-  @override
-  bool get stringify => player.stringify;
-
-  PlayerInBattle copyWith({
-    Player player,
-    int modifier,
-    Player ally,
-  }) {
-    return PlayerInBattle(
-      player: player,
-      modifier: modifier ?? this.modifier,
-      ally: ally ?? this.ally,
-    );
-  }
-}
- */
 class Monster extends Equatable {
   final String id;
   final int level;
   final int modifiers;
   final int treasures;
-  Monster({this.id, this.level, this.modifiers, this.treasures});
+  Monster({this.id, this.level = 1, this.modifiers = 0, this.treasures = 0});
   int get strength => level + modifiers;
 
   @override
@@ -117,9 +70,9 @@ class Monster extends Equatable {
 
   Monster copyWith({
     String id,
-    int level = 1,
-    int modifiers = 0,
-    int treasures = 0,
+    int level,
+    int modifiers,
+    int treasures,
   }) {
     return Monster(
       id: id ?? this.id,
