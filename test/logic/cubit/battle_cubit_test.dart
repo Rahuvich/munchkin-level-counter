@@ -17,8 +17,9 @@ void main() {
 
       player = gameCubit.state.players.first;
 
-      battleCubit = BattleCubit(
-          gameCubit: gameCubit, player: player, initialMonsterId: 'monster_id');
+      battleCubit = BattleCubit(gameCubit: gameCubit);
+      battleCubit.initializeBattleWithPlayer(player,
+          initialMonsterId: 'monster_id');
     });
 
     tearDown(() {

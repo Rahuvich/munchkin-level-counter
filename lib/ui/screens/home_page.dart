@@ -4,10 +4,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:munchkin/logic/cubit/battle_cubit.dart';
 import 'package:munchkin/ui/screens/battle_page.dart';
 import 'package:munchkin/ui/screens/players_page.dart';
 import 'package:munchkin/models/models.dart';
 import 'package:munchkin/ui/screens/settings_page.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class MyHomePage extends StatefulWidget {
   MyHomePage({Key key}) : super(key: key);
@@ -31,8 +33,11 @@ class _MyHomePageState extends State<MyHomePage> {
 
     screens = [
       PlayersPage(
-        onBattle: () => _pageController.animateToPage(1,
-            duration: Duration(milliseconds: 200), curve: Curves.easeInOut),
+        onBattle: (Player player) {
+          context.read<BattleCubit>().initializeBattleWithPlayer(player);
+          _pageController.animateToPage(1,
+              duration: Duration(milliseconds: 200), curve: Curves.easeInOut);
+        },
       ),
       BattlePage(
         onBack: () => _pageController.animateToPage(0,

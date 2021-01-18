@@ -14,15 +14,7 @@ class BattleCubit extends Cubit<BattleState> {
   StreamSubscription _gameSubscription;
   GameCubit gameCubit;
 
-  BattleCubit(
-      {@required this.gameCubit,
-      @required Player player,
-      String initialMonsterId})
-      : super(BattleState(player: player, monsters: [
-          Monster(
-            id: initialMonsterId ?? Uuid().v1(),
-          )
-        ])) {
+  BattleCubit({@required this.gameCubit}) : super(BattleState()) {
     monitorPlayers();
   }
 
@@ -31,7 +23,8 @@ class BattleCubit extends Cubit<BattleState> {
       Player player = this.state.player;
       Player ally = this.state.ally;
 
-      if (state.players.any((p) => p.id == player.id && p != player)) {
+      if (player != null &&
+          state.players.any((p) => p.id == player.id && p != player)) {
         Player auxPlayer = state.players.firstWhere(
             (p) => p.id == player.id && p != player,
             orElse: () => player);
@@ -49,6 +42,11 @@ class BattleCubit extends Cubit<BattleState> {
       }
     });
   }
+
+  void initializeBattleWithPlayer(Player player, {String initialMonsterId}) =>
+      emit(BattleState(
+          player: player,
+          monsters: [Monster(id: initialMonsterId ?? Uuid().v1())]));
 
   void updatePlayer(player) {
     emit(this.state.copyWith(player: player));

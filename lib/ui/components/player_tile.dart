@@ -9,7 +9,7 @@ import 'package:flutter_color/flutter_color.dart';
 class PlayerTile extends StatelessWidget {
   final Player player;
   final bool forceExpanded;
-  final VoidCallback onBattle;
+  final Function(Player) onBattle;
   PlayerTile(
       {@required this.player,
       @required this.onBattle,
@@ -61,11 +61,11 @@ class PlayerTile extends StatelessWidget {
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 18.0),
                 child:
-                    Text('Battle', style: context.theme().textTheme.headline5),
+                    Text('Battle', style: context.theme().textTheme.bodyText1),
               ),
               size: 30,
               color: context.theme().accentColor,
-              onPressed: () => onBattle.call(),
+              onPressed: () => onBattle.call(player),
             ),
             FancyButton(
               child: Icon(FontAwesomeIcons.skull),

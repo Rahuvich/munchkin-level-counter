@@ -30,7 +30,8 @@ class BattleState extends Equatable {
     );
   }
 
-  int get playerStrength => player.strength + modifiers + (ally?.strength ?? 0);
+  int get playerStrength =>
+      (player?.strength ?? 0) + modifiers + (ally?.strength ?? 0);
   int get monstersStrength =>
       monsters.fold(0, (sum, monster) => sum + monster.strength);
 }

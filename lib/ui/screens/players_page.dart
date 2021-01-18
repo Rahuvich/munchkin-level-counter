@@ -8,7 +8,7 @@ import 'package:munchkin/ui/components/players_settings_bottom.dart';
 import 'package:munchkin/ui/components/players_statistics_bottom.dart';
 
 class PlayersPage extends StatelessWidget {
-  final VoidCallback onBattle;
+  final Function(Player) onBattle;
   PlayersPage({@required this.onBattle});
   @override
   Widget build(BuildContext context) {
@@ -54,12 +54,7 @@ class PlayersPage extends StatelessWidget {
         ),
         SliverList(
           delegate: SliverChildListDelegate(players
-              .map((player) => PlayerTile(
-                    player: player,
-                    onBattle: () {
-                      onBattle.call();
-                    },
-                  ))
+              .map((player) => PlayerTile(player: player, onBattle: onBattle))
               .toList()),
         ),
       ],
