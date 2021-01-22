@@ -38,82 +38,59 @@ void main() {
     test(
         'Should track when a player wins a battle how many monsters has he killed',
         () async {
-      gameCubit.addLevelToPlayer('id', 1);
-      gameCubit.addGearToPlayer('id', 1);
+      expectLater(
+          achievementsCubit,
+          emits(AchievementsState(
+              mostMonstersKilled: {'id': 2}, mostLonelyBoy: {'id': 1})));
 
-      await Future.delayed(Duration(seconds: 4));
-      battleCubit.addMonster();
+      battleCubit.addModifiersToMonster('monster_id', -5);
+      battleCubit.addMonster(id: 'monster_id_2');
+
+      battleCubit.addModifiersToMonster('monster_id_2', -5);
       battleCubit.endBattle();
-
-      await Future.delayed(Duration(seconds: 4));
-      expect(
-          achievementsCubit.state,
-          AchievementsState(
-              mostMonstersKilled: {'id': 2},
-              mostLonelyBoy: {'id': 1},
-              mostStrength: {'id': 3}));
     });
 
     test(
         'Should track when a player wins a battle how many treasures has he recollected',
         () async {
-      gameCubit.addLevelToPlayer('id', 1);
-      gameCubit.addGearToPlayer('id', 1);
-
-      await Future.delayed(Duration(seconds: 4));
-      battleCubit.addTreasuresToMonster('monster_id', 10);
-      battleCubit.endBattle();
-
-      await Future.delayed(Duration(seconds: 4));
-      expect(
-          achievementsCubit.state,
-          AchievementsState(
+      expectLater(
+          achievementsCubit,
+          emits(AchievementsState(
               mostMonstersKilled: {'id': 1},
               mostTreasures: {'id': 10},
-              mostLonelyBoy: {'id': 1},
-              mostStrength: {'id': 3}));
+              mostLonelyBoy: {'id': 1})));
+
+      battleCubit.addModifiersToMonster('monster_id', -5);
+      battleCubit.addTreasuresToMonster('monster_id', 10);
+      battleCubit.endBattle();
     });
 
     test('Should track when a player wins a battle alone', () async {
-      gameCubit.addLevelToPlayer('id', 1);
-      gameCubit.addGearToPlayer('id', 1);
-
-      await Future.delayed(Duration(seconds: 4));
+      expectLater(
+          achievementsCubit,
+          emits(AchievementsState(
+              mostMonstersKilled: {'id': 1}, mostLonelyBoy: {'id': 1})));
+      battleCubit.addModifiersToMonster('monster_id', -5);
       battleCubit.endBattle();
-
-      await Future.delayed(Duration(seconds: 4));
-      expect(
-          achievementsCubit.state,
-          AchievementsState(
-              mostMonstersKilled: {'id': 1},
-              mostLonelyBoy: {'id': 1},
-              mostStrength: {'id': 3}));
     });
 
     test('Should track when a player lose a battle', () async {
+      expectLater(achievementsCubit,
+          emits(AchievementsState(mostLostBattles: {'id': 1})));
       battleCubit.endBattle();
-
-      await Future.delayed(Duration(seconds: 4));
-      expect(achievementsCubit.state,
-          AchievementsState(mostLostBattles: {'id': 1}));
     });
 
     test('Should track when a player changes strength', () async {
+      expectLater(
+          achievementsCubit,
+          emitsInOrder([
+            AchievementsState(mostStrength: {'id': 2}),
+            AchievementsState(mostStrength: {'id': 3}),
+            AchievementsState(mostStrength: {'id': 3, 'planas_id': 1})
+          ]));
       gameCubit.addLevelToPlayer('id', 1);
-
-      await Future.delayed(Duration(seconds: 4));
-      expect(
-          achievementsCubit.state, AchievementsState(mostStrength: {'id': 2}));
-
       gameCubit.addGearToPlayer('id', 1);
-      await Future.delayed(Duration(seconds: 4));
-      expect(
-          achievementsCubit.state, AchievementsState(mostStrength: {'id': 3}));
-
       gameCubit.addPlayer('Planas', id: 'planas_id');
-      await Future.delayed(Duration(seconds: 4));
-      expect(achievementsCubit.state,
-          AchievementsState(mostStrength: {'id': 3, 'planas_id': 1}));
     });
   });
 }
