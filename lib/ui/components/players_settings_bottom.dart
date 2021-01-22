@@ -31,10 +31,10 @@ class PlayersSettingsBottomSheet extends StatelessWidget {
                 // * Caution actions
                 ListTile(
                     title: Text(
-                      'Reset stats',
+                      'Reset players stats',
                       style: TextStyle(color: context.theme().errorColor),
                     ),
-                    subtitle: Text('Restart stats but keep players',
+                    subtitle: Text('Restart players stats but keep them',
                         style: TextStyle(color: context.theme().errorColor)),
                     leading: Icon(Icons.settings_backup_restore_rounded,
                         color: context.theme().errorColor),

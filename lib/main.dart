@@ -2,6 +2,7 @@ import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
+import 'package:munchkin/logic/cubit/achievements_cubit.dart';
 import 'package:munchkin/logic/cubit/battle_cubit.dart';
 import 'package:munchkin/logic/cubit/game_observer.dart';
 import 'package:munchkin/ui/theme/app_theme.dart';
@@ -17,12 +18,21 @@ void main() async {
   ); */
   Bloc.observer = GameObserver();
   GameCubit gameCubit = GameCubit();
-  runApp(MyApp(gameCubit: gameCubit));
+  BattleCubit battleCubit = BattleCubit(gameCubit: gameCubit);
+  AchievementsCubit achievementsCubit =
+      AchievementsCubit(battleCubit: battleCubit);
+  runApp(MyApp(
+    gameCubit: gameCubit,
+    battleCubit: battleCubit,
+    achievementsCubit: achievementsCubit,
+  ));
 }
 
 class MyApp extends StatelessWidget {
   final GameCubit gameCubit;
-  MyApp({this.gameCubit});
+  final BattleCubit battleCubit;
+  final AchievementsCubit achievementsCubit;
+  MyApp({this.gameCubit, this.battleCubit, this.achievementsCubit});
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
@@ -31,7 +41,10 @@ class MyApp extends StatelessWidget {
           create: (context) => gameCubit,
         ),
         BlocProvider(
-          create: (context) => BattleCubit(gameCubit: gameCubit),
+          create: (context) => battleCubit,
+        ),
+        BlocProvider(
+          create: (context) => achievementsCubit,
         )
       ],
       child: MaterialApp(

@@ -88,7 +88,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       )),
               IconButton(
                   icon: Icon(
-                    CupertinoIcons.slider_horizontal_3,
+                    CupertinoIcons.settings,
                   ),
                   color: currentPage == 2
                       ? Colors.white

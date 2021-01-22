@@ -26,7 +26,7 @@ class _NewPlayerInputState extends State<NewPlayerInput> {
       decoration: InputDecoration(hintText: 'Enter a new player'),
       onSubmitted: (name) {
         _controller.clear();
-        context.read<GameCubit>().addPlayer(name);
+        context.read<GameCubit>().addPlayer(name.toUpperCase());
         _focusNode.requestFocus();
       },
     );

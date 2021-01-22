@@ -46,6 +46,10 @@ class BattlePage extends StatelessWidget {
                     onPressed: () => context.read<BattleCubit>().addMonster(),
                   ),
                   FancyButton(
+                    onPressed: () {
+                      context.read<BattleCubit>().endBattle();
+                      onBack.call();
+                    },
                     child: Text(
                       'End battle',
                       style: context.theme().textTheme.bodyText1,

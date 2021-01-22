@@ -8,7 +8,7 @@ import 'dart:convert';
 part 'game_state.dart';
 
 class GameCubit extends Cubit<GameState> {
-  GameCubit() : super(GameState(players: []));
+  GameCubit() : super(GameState());
 
   void addPlayer(String name, {String id}) => emit(this.state.copyWith(
       players: List.unmodifiable([]
@@ -75,14 +75,6 @@ class GameCubit extends Cubit<GameState> {
     emit(this.state.copyWith(players: List.unmodifiable(list)));
   }
 
-  void resetPlayers() {
-    List<Player> list = this.state.players.map((player) {
-      return player.copyWith(gear: 0, level: 1);
-    }).toList();
-
-    emit(this.state.copyWith(players: List.unmodifiable(list)));
-  }
-
   void shufflePlayers() {
     List<Player> list = List.from(this.state.players);
     list.shuffle();
@@ -90,7 +82,17 @@ class GameCubit extends Cubit<GameState> {
     emit(this.state.copyWith(players: List.unmodifiable(list)));
   }
 
-  void restartGame() => emit(this.state.copyWith(players: []));
+  void resetPlayers() {
+    List<Player> list = this.state.players.map((player) {
+      return player.copyWith(gear: 0, level: 1);
+    }).toList();
+
+    emit(GameState(
+      players: List.unmodifiable(list),
+    ));
+  }
+
+  void restartGame() => emit(GameState());
 
   @override
   GameState fromJson(Map<String, dynamic> json) => GameState.fromMap(json);

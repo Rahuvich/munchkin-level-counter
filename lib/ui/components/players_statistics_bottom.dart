@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:munchkin/logic/cubit/achievements_cubit.dart';
+import 'package:munchkin/logic/cubit/game_cubit.dart';
 import 'package:munchkin/models/models.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'dart:math' as math;
 
 class PlayersStatisticsBottom extends StatelessWidget {
   @override
@@ -17,20 +21,74 @@ class PlayersStatisticsBottom extends StatelessWidget {
               mainAxisSize: MainAxisSize.min,
               children: [
                 // * Subtle actions
-                ListTile(
-                  enabled: false,
-                  title: Text('Bounty Hunter'),
-                  subtitle: Text(
-                      'Have won the biggest amount of treasures from enemies'),
-                  leading:
-                      Text('Mabe', style: TextStyle(fontFamily: 'Quasimodo')),
-                ),
+                Builder(builder: (context) {
+                  MapEntry<String, int> entry;
+                  Player player;
+                  bool enabled = false;
+                  try {
+                    entry = context
+                        .select<AchievementsCubit, MapEntry<String, int>>(
+                            (cubit) => cubit.state.mostTreasures.entries.first);
+
+                    player = context.select<GameCubit, Player>((cubit) => cubit
+                        .state.players
+                        .firstWhere((p) => p.id == entry.key));
+
+                    enabled = true;
+                  } catch (e) {}
+
+                  return ListTile(
+                    enabled: enabled,
+                    title: Text('Bounty Hunter'),
+                    subtitle: Text(
+                        '${player?.name ?? 'None'} has won the biggest amount of treasures from enemies'),
+                    leading: SizedBox(
+                      width: 40,
+                      height: 40,
+                      child: Center(
+                        child: Text('${entry?.value ?? 0}',
+                            style: context.theme().textTheme.headline5),
+                      ),
+                    ),
+                  );
+                }),
                 ListTile(
                   enabled: false,
                   title: Text('Natural Born Killer'),
                   subtitle: Text('has killed 4 monsters'),
                   leading: Text('', style: TextStyle(fontFamily: 'Quasimodo')),
                 ),
+                Builder(builder: (context) {
+                  MapEntry<String, int> entry;
+                  Player player;
+                  bool enabled = false;
+                  try {
+                    entry = context
+                        .select<AchievementsCubit, MapEntry<String, int>>(
+                            (cubit) => cubit.state.mostStrength.entries.first);
+
+                    player = context.select<GameCubit, Player>((cubit) => cubit
+                        .state.players
+                        .firstWhere((p) => p.id == entry.key));
+
+                    enabled = true;
+                  } catch (e) {}
+
+                  return ListTile(
+                    enabled: enabled,
+                    title: Text('Armed to the teeth'),
+                    subtitle: Text(
+                        '${player?.name ?? 'None'} has had more strength at some point'),
+                    leading: SizedBox(
+                      width: 40,
+                      height: 40,
+                      child: Center(
+                        child: Text('${entry?.value ?? 0}',
+                            style: context.theme().textTheme.headline5),
+                      ),
+                    ),
+                  );
+                }),
               ],
             ),
           ),

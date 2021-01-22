@@ -22,8 +22,7 @@ void main() {
       battleCubit.initializeBattleWithPlayer(player,
           initialMonsterId: 'monster_id');
 
-      achievementsCubit =
-          AchievementsCubit(battleCubit: battleCubit, gameCubit: gameCubit);
+      achievementsCubit = AchievementsCubit(battleCubit: battleCubit);
     });
 
     tearDown(() {
@@ -91,6 +90,19 @@ void main() {
       gameCubit.addLevelToPlayer('id', 1);
       gameCubit.addGearToPlayer('id', 1);
       gameCubit.addPlayer('Planas', id: 'planas_id');
+    });
+
+    test('Should reset when game is restarted', () async {
+      expectLater(
+          achievementsCubit,
+          emitsInOrder([
+            AchievementsState(mostStrength: {'id': 2}),
+            AchievementsState(mostStrength: {'id': 3}),
+            AchievementsState()
+          ]));
+      gameCubit.addLevelToPlayer('id', 1);
+      gameCubit.addGearToPlayer('id', 1);
+      gameCubit.restartGame();
     });
   });
 }
