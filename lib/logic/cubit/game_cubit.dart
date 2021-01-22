@@ -1,8 +1,9 @@
-import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:munchkin/models/models.dart';
 import 'package:uuid/uuid.dart';
 import 'dart:math' as math;
+import 'dart:convert';
 
 part 'game_state.dart';
 
@@ -90,4 +91,10 @@ class GameCubit extends Cubit<GameState> {
   }
 
   void restartGame() => emit(this.state.copyWith(players: []));
+
+  @override
+  GameState fromJson(Map<String, dynamic> json) => GameState.fromMap(json);
+
+  @override
+  Map<String, dynamic> toJson(GameState state) => state.toMap();
 }

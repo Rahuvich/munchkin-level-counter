@@ -1,8 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:munchkin/logic/cubit/game_cubit.dart';
 import 'package:bloc_test/bloc_test.dart';
 import 'package:munchkin/logic/cubit/settings_cubit.dart';
-import 'package:munchkin/models/munchkin.dart';
 
 void main() {
   group('Settings Cubit', () {

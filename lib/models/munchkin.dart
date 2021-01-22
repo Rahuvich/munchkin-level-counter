@@ -1,32 +1,16 @@
+import 'dart:convert';
+
 import 'package:equatable/equatable.dart';
 
 import 'constants.dart';
 
-abstract class PlayerBase extends Equatable {
+class Player extends Equatable {
   final String id;
   final String name;
   final Gender gender;
   final int level;
   final int gear;
-  PlayerBase({this.id, this.name, this.gender, this.level, this.gear});
-
-  int get strength;
-
-  @override
-  List<Object> get props;
-
-  @override
-  bool get stringify;
-}
-
-class Player extends PlayerBase {
-  Player({
-    String id,
-    String name,
-    Gender gender = Gender.MALE,
-    int level = 1,
-    int gear = 0,
-  }) : super(gear: gear, level: level, gender: gender, id: id, name: name);
+  Player({this.id, this.name, this.gender = Gender.MALE, this.level = 1, this.gear = 0});
 
   Player copyWith({
     String id,
@@ -44,7 +28,6 @@ class Player extends PlayerBase {
     );
   }
 
-  @override
   int get strength => level + gear;
 
   @override
@@ -52,6 +35,32 @@ class Player extends PlayerBase {
 
   @override
   bool get stringify => true;
+
+  Map<String, dynamic> toMap() {
+    return {
+      'id': id,
+      'name': name,
+      'gender': gender == Gender.MALE ? 'male' : 'female',
+      'level': level,
+      'gear': gear,
+    };
+  }
+
+  factory Player.fromMap(Map<String, dynamic> map) {
+    if (map == null) return null;
+
+    return Player(
+      id: map['id'],
+      name: map['name'],
+      gender: map['gender'] == 'male' ? Gender.MALE : Gender.FEMALE,
+      level: map['level'],
+      gear: map['gear'],
+    );
+  }
+
+  String toJson() => json.encode(toMap());
+
+  factory Player.fromJson(String source) => Player.fromMap(json.decode(source));
 }
 
 class Monster extends Equatable {
@@ -81,4 +90,29 @@ class Monster extends Equatable {
       treasures: treasures ?? this.treasures,
     );
   }
+
+  Map<String, dynamic> toMap() {
+    return {
+      'id': id,
+      'level': level,
+      'modifiers': modifiers,
+      'treasures': treasures,
+    };
+  }
+
+  factory Monster.fromMap(Map<String, dynamic> map) {
+    if (map == null) return null;
+
+    return Monster(
+      id: map['id'],
+      level: map['level'],
+      modifiers: map['modifiers'],
+      treasures: map['treasures'],
+    );
+  }
+
+  String toJson() => json.encode(toMap());
+
+  factory Monster.fromJson(String source) =>
+      Monster.fromMap(json.decode(source));
 }

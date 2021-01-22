@@ -160,5 +160,13 @@ void main() {
 
       expect(battleCubit.state.monstersStrength, 3);
     });
+
+    test('Battle should finish', () {
+      Player ally = Player(id: 'ally_id', name: 'Ally', level: 6, gear: 5);
+      expect(battleCubit.state.battleFinished, false);
+      battleCubit.endBattle();
+
+      expect(battleCubit.state.battleFinished, true);
+    });
   });
 }

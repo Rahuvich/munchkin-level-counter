@@ -3,7 +3,9 @@ import 'package:munchkin/logic/cubit/game_cubit.dart';
 import 'package:bloc_test/bloc_test.dart';
 import 'package:munchkin/models/models.dart';
 
-void main() {
+void main() async {
+  /* TestWidgetsFlutterBinding.ensureInitialized();
+  HydratedBloc.storage = await HydratedStorage.build(); */
   group('Gameplay Cubit', () {
     GameCubit gameCubit;
 

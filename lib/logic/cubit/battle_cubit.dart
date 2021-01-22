@@ -109,6 +109,8 @@ class BattleCubit extends Cubit<BattleState> {
   void removeMonster(String id) => emit(this.state.copyWith(
       monsters: this.state.monsters.where((m) => m.id != id).toList()));
 
+  void endBattle() => emit(this.state.copyWith(battleFinished: true));
+
   @override
   Future<void> close() {
     _gameSubscription.cancel();
