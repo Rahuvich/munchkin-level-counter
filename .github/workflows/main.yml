@@ -27,7 +27,7 @@ jobs:
 
       # Runs a single command using the runners shell
       - name: Install Flutter 
-        uses: subosito/flutter-action@v1.3.2
+        uses: subosito/flutter-action@v1
 
       # Get dependencies
       - name: Install dependencies 
