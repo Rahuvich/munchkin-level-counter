@@ -1,15 +1,21 @@
 import 'package:flutter_test/flutter_test.dart';
+import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:munchkin/logic/cubit/game_cubit.dart';
 import 'package:bloc_test/bloc_test.dart';
+import 'package:mockito/mockito.dart';
 import 'package:munchkin/models/models.dart';
 
-void main() async {
-  /* TestWidgetsFlutterBinding.ensureInitialized();
-  HydratedBloc.storage = await HydratedStorage.build(); */
+class MockStorage extends Mock implements Storage {}
+
+void main() {
   group('Gameplay Cubit', () {
+    Storage storage;
     GameCubit gameCubit;
 
     setUp(() {
+      storage = MockStorage();
+      when(storage.write(any, any)).thenAnswer((_) async {});
+      HydratedBloc.storage = storage;
       gameCubit = GameCubit();
     });
 

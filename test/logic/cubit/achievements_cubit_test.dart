@@ -1,8 +1,12 @@
 import 'package:flutter_test/flutter_test.dart';
+import 'package:hydrated_bloc/hydrated_bloc.dart';
+import 'package:mockito/mockito.dart';
 import 'package:munchkin/logic/cubit/achievements_cubit.dart';
 import 'package:munchkin/logic/cubit/battle_cubit.dart';
 import 'package:munchkin/logic/cubit/game_cubit.dart';
 import 'package:munchkin/models/munchkin.dart';
+
+class MockStorage extends Mock implements Storage {}
 
 void main() {
   group('Achievements Cubit', () {
@@ -10,8 +14,12 @@ void main() {
     BattleCubit battleCubit;
     AchievementsCubit achievementsCubit;
     Player player;
+    Storage storage;
 
     setUp(() {
+      storage = MockStorage();
+      when(storage.write(any, any)).thenAnswer((_) async {});
+      HydratedBloc.storage = storage;
       gameCubit = GameCubit();
 
       gameCubit.addPlayer('Mabe', id: 'id');

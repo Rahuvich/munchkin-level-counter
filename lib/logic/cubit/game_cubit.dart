@@ -7,7 +7,7 @@ import 'dart:convert';
 
 part 'game_state.dart';
 
-class GameCubit extends Cubit<GameState> {
+class GameCubit extends HydratedCubit<GameState> {
   GameCubit() : super(GameState());
 
   void addPlayer(String name, {String id}) => emit(this.state.copyWith(

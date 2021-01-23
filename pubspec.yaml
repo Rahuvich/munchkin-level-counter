@@ -37,6 +37,7 @@ dependencies:
   font_awesome_flutter: ^8.11.0
   uuid: ^2.2.2
   flutter_color: any
+  mockito: ^4.1.3
 
 dev_dependencies:
   flutter_test:
