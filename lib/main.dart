@@ -12,10 +12,10 @@ import 'package:path_provider/path_provider.dart';
 import 'logic/cubit/game_cubit.dart';
 
 void main() async {
-  /* WidgetsFlutterBinding.ensureInitialized();
+  WidgetsFlutterBinding.ensureInitialized();
   HydratedBloc.storage = await HydratedStorage.build(
     storageDirectory: await getApplicationDocumentsDirectory(),
-  ); */
+  );
   Bloc.observer = GameObserver();
   GameCubit gameCubit = GameCubit();
   BattleCubit battleCubit = BattleCubit(gameCubit: gameCubit);
