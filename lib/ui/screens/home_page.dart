@@ -73,7 +73,7 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       bottomNavigationBar: BottomAppBar(
-        color: context.theme().appBarTheme.color,
+        color: context.theme().bottomAppBarColor,
         shape: CircularNotchedRectangle(),
         notchMargin: 7.0,
         child: Container(

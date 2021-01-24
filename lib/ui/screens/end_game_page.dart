@@ -103,22 +103,27 @@ class EndGamePage extends StatelessWidget {
       ),
       bottomNavigationBar: SafeArea(
         child: Container(
+          padding: const EdgeInsets.symmetric(horizontal: 20.0),
           color: context.theme().appBarTheme.color,
           height: kToolbarHeight,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              FancyButton(
-                child: Text(
-                  'New game',
-                  style: context.theme().textTheme.bodyText1,
+              Expanded(
+                child: FancyButton(
+                  child: Center(
+                    child: Text(
+                      'New game',
+                      style: context.theme().textTheme.bodyText1,
+                    ),
+                  ),
+                  size: 30,
+                  color: context.theme().accentColor,
+                  onPressed: () {
+                    gameCubit.resetPlayers();
+                    Navigator.of(context).pushReplacementNamed('/');
+                  },
                 ),
-                size: 30,
-                color: context.theme().accentColor,
-                onPressed: () {
-                  gameCubit.resetPlayers();
-                  Navigator.of(context).pushReplacementNamed('/');
-                },
               ),
             ],
           ),

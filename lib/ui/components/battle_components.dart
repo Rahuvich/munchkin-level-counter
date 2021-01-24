@@ -33,6 +33,7 @@ class PlayerInBattle extends StatelessWidget {
                   player.gender == Gender.MALE
                       ? FontAwesomeIcons.mars
                       : FontAwesomeIcons.venus,
+                  key: Key('battlePage_player_gender'),
                   color: player.gender == Gender.MALE
                       ? Colors.blueAccent
                       : Colors.pinkAccent,
@@ -46,6 +47,7 @@ class PlayerInBattle extends StatelessWidget {
                   allyPlayer == null
                       ? player.name
                       : '${player.name} x ${allyPlayer.name}',
+                  key: Key('battlePage_player_name'),
                   style: context.theme().textTheme.bodyText1,
                 ),
               ),
@@ -93,6 +95,7 @@ class PlayerInBattle extends StatelessWidget {
             height: 20,
             child: FittedBox(
               child: Text(player.level.toString(),
+                  key: Key('battlePage_player_level'),
                   style: context.theme().textTheme.headline5),
             )),
         FancyButton(
@@ -124,6 +127,7 @@ class PlayerInBattle extends StatelessWidget {
             height: 20,
             child: FittedBox(
               child: Text(player.gear.toString(),
+                  key: Key('battlePage_player_gear'),
                   style: context.theme().textTheme.headline5),
             )),
         FancyButton(
@@ -153,6 +157,7 @@ class PlayerInBattle extends StatelessWidget {
             height: 20,
             child: FittedBox(
               child: Text(modifiersNum.toString(),
+                  key: Key('battlePage_player_modifiers'),
                   style: context.theme().textTheme.headline5),
             )),
         FancyButton(
@@ -175,6 +180,7 @@ class PlayerInBattle extends StatelessWidget {
             height: 20,
             child: FittedBox(
               child: Text(ally?.strength?.toString() ?? 0.toString(),
+                  key: Key('battlePage_player_ally_strength'),
                   style: context.theme().textTheme.headline5),
             )),
         Builder(builder: (context) {

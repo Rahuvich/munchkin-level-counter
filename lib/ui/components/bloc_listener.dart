@@ -23,9 +23,7 @@ class BlocsListener extends StatelessWidget {
       child: BlocListener<GameCubit, GameState>(
         // * Trigger when game restarts
         listenWhen: (prevState, nextState) =>
-            !prevState.gameFinished &&
-            !prevState.hasJustStarted &&
-            nextState.hasJustStarted,
+            !prevState.hasJustStarted && nextState.hasJustStarted,
         listener: (context, state) {
           Scaffold.of(context).showSnackBar(SnackBar(
             padding: const EdgeInsets.symmetric(vertical: 0),
