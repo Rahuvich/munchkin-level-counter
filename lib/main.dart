@@ -5,6 +5,7 @@ import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:munchkin/logic/cubit/achievements_cubit.dart';
 import 'package:munchkin/logic/cubit/battle_cubit.dart';
 import 'package:munchkin/logic/cubit/game_observer.dart';
+import 'package:munchkin/logic/cubit/settings_cubit.dart';
 import 'package:munchkin/ui/theme/app_theme.dart';
 import 'package:munchkin/ui/router/route_generator.dart';
 import 'package:path_provider/path_provider.dart';
@@ -45,6 +46,9 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider(
           create: (context) => achievementsCubit,
+        ),
+        BlocProvider(
+          create: (context) => SettingsCubit(),
         )
       ],
       child: MaterialApp(

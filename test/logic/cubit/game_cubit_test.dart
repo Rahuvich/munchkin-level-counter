@@ -134,10 +134,23 @@ void main() {
 
     blocTest('Remove a player',
         build: () => gameCubit,
+        seed: GameState(players: [
+          Player(id: 'id', name: 'Mabe'),
+          Player(id: 'id_2', name: 'Cade')
+        ], hasJustStarted: false),
+        act: (GameCubit cubit) => cubit..removePlayer('id_2'),
+        expect: [
+          GameState(players: [
+            Player(id: 'id', name: 'Mabe'),
+          ], hasJustStarted: false)
+        ]);
+
+    blocTest('Restart game when last player is removed',
+        build: () => gameCubit,
         seed: GameState(
             players: [Player(id: 'id', name: 'Mabe')], hasJustStarted: false),
         act: (GameCubit cubit) => cubit..removePlayer('id'),
-        expect: [GameState(players: [], hasJustStarted: false)]);
+        expect: [GameState(players: [], hasJustStarted: true)]);
 
     blocTest('Restart the game',
         build: () => gameCubit,
@@ -174,6 +187,13 @@ void main() {
             Player(id: 'id', name: 'Mabe'),
             Player(id: 'temp_id', name: 'Temp')
           ], hasJustStarted: true),
+        ]);
+
+    blocTest('Change max level of a game – must be above 1–',
+        build: () => gameCubit,
+        act: (GameCubit cubit) => cubit..changeMaxLevel(20)..changeMaxLevel(0),
+        expect: [
+          GameState(players: [], maxLevelTrigger: 20, hasJustStarted: false),
         ]);
   });
 }

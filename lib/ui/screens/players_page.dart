@@ -5,7 +5,7 @@ import 'package:munchkin/models/models.dart';
 import 'package:munchkin/ui/components/new_player.dart';
 import 'package:munchkin/ui/components/player_tile.dart';
 import 'package:munchkin/ui/components/players_settings_bottom.dart';
-import 'package:munchkin/ui/components/players_statistics_bottom.dart';
+import 'package:munchkin/ui/components/players_game_heroes_bottom.dart';
 
 class PlayersPage extends StatelessWidget {
   final Function(Player) onBattle;
@@ -30,7 +30,7 @@ class PlayersPage extends StatelessWidget {
                 showModalBottomSheet(
                   context: context,
                   backgroundColor: Colors.transparent,
-                  builder: (context) => PlayersStatisticsBottom(),
+                  builder: (context) => PlayersGameHeroesBottom(),
                 );
               },
             ),

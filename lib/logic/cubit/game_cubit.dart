@@ -15,9 +15,15 @@ class GameCubit extends HydratedCubit<GameState> {
         ..addAll(this.state.players)
         ..add(Player(id: id ?? Uuid().v1(), name: name)))));
 
-  void removePlayer(String id) => emit(this.state.copyWith(
-      players: List.unmodifiable(
-          []..addAll(this.state.players.where((player) => player.id != id)))));
+  void removePlayer(String id) {
+    if (this.state.players.length > 1) {
+      emit(this.state.copyWith(
+          players: List.unmodifiable([]
+            ..addAll(this.state.players.where((player) => player.id != id)))));
+    } else {
+      emit(GameState());
+    }
+  }
 
   void addLevelToPlayer(String id, int count) {
     List<Player> list = this.state.players.map((player) {
@@ -93,6 +99,12 @@ class GameCubit extends HydratedCubit<GameState> {
   }
 
   void restartGame() => emit(GameState());
+
+  void changeMaxLevel(int maxLevel) {
+    if (maxLevel > 1) {
+      emit(this.state.copyWith(maxLevelTrigger: maxLevel));
+    }
+  }
 
   @override
   GameState fromJson(Map<String, dynamic> json) => GameState.fromMap(json);

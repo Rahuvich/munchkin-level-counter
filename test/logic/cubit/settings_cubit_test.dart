@@ -7,6 +7,7 @@ void main() {
     SettingsCubit settingsCubit;
 
     setUp(() {
+      TestWidgetsFlutterBinding.ensureInitialized();
       settingsCubit = SettingsCubit();
     });
 

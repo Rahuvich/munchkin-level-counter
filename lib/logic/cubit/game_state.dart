@@ -4,13 +4,18 @@ class GameState extends Equatable {
   final List<Player> players;
   final bool gameFinished;
   final bool hasJustStarted;
+
+  final int maxLevelTrigger;
+
   const GameState(
       {this.players = const [],
       this.gameFinished = false,
-      this.hasJustStarted = true});
+      this.hasJustStarted = true,
+      this.maxLevelTrigger = 10});
 
   @override
-  List<Object> get props => [players, gameFinished, hasJustStarted];
+  List<Object> get props =>
+      [players, gameFinished, hasJustStarted, maxLevelTrigger];
 
   @override
   bool get stringify => true;
@@ -18,10 +23,12 @@ class GameState extends Equatable {
   GameState copyWith({
     List<Player> players,
     bool gameFinished,
+    int maxLevelTrigger,
   }) {
     return GameState(
         players: players ?? this.players,
         gameFinished: gameFinished ?? this.gameFinished,
+        maxLevelTrigger: maxLevelTrigger ?? this.maxLevelTrigger,
         hasJustStarted: false);
   }
 
@@ -29,7 +36,8 @@ class GameState extends Equatable {
     return {
       'players': players?.map((x) => x?.toMap())?.toList() ?? [],
       'gameFinished': gameFinished,
-      'hasJustStarted': hasJustStarted
+      'hasJustStarted': hasJustStarted,
+      'maxLevelTrigger': maxLevelTrigger
     };
   }
 
@@ -40,7 +48,8 @@ class GameState extends Equatable {
         players: List<Player>.from(
             map['players']?.map((x) => Player.fromMap(x)) ?? []),
         gameFinished: map['gameFinished'],
-        hasJustStarted: map['hasJustStarted']);
+        hasJustStarted: map['hasJustStarted'],
+        maxLevelTrigger: map['maxLevelTrigger']);
   }
 
   String toJson() => json.encode(toMap());
