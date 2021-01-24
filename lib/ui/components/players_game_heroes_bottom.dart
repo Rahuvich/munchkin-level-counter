@@ -56,7 +56,7 @@ class PlayersGameHeroesBottom extends StatelessWidget {
           width: 40,
           height: 40,
           child: Center(
-            child: Text('${entry?.value ?? 0}',
+            child: Text('${entry?.value ?? ''}',
                 style: context.theme().textTheme.headline5),
           ),
         ),
@@ -88,7 +88,7 @@ class PlayersGameHeroesBottom extends StatelessWidget {
           width: 40,
           height: 40,
           child: Center(
-            child: Text('${entry?.value ?? 0}',
+            child: Text('${entry?.value ?? ''}',
                 style: context.theme().textTheme.headline5),
           ),
         ),
@@ -120,7 +120,7 @@ class PlayersGameHeroesBottom extends StatelessWidget {
           width: 40,
           height: 40,
           child: Center(
-            child: Text('${entry?.value ?? 0}',
+            child: Text('${entry?.value ?? ''}',
                 style: context.theme().textTheme.headline5),
           ),
         ),
@@ -151,7 +151,7 @@ class PlayersGameHeroesBottom extends StatelessWidget {
           width: 40,
           height: 40,
           child: Center(
-            child: Text('${entry?.value ?? 0}',
+            child: Text('${entry?.value ?? ''}',
                 style: context.theme().textTheme.headline5),
           ),
         ),
@@ -183,7 +183,7 @@ class PlayersGameHeroesBottom extends StatelessWidget {
           width: 40,
           height: 40,
           child: Center(
-            child: Text('${entry?.value ?? 0}',
+            child: Text(enabled ? '${entry?.value ?? ''}' : '',
                 style: context.theme().textTheme.headline5),
           ),
         ),
