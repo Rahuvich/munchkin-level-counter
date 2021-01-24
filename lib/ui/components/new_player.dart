@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:munchkin/logic/cubit/game_cubit.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:munchkin/models/models.dart';
 
 class NewPlayerInput extends StatefulWidget {
   @override
@@ -26,7 +27,7 @@ class _NewPlayerInputState extends State<NewPlayerInput> {
       decoration: InputDecoration(hintText: 'Enter a new player'),
       onSubmitted: (name) {
         _controller.clear();
-        context.read<GameCubit>().addPlayer(name.toUpperCase());
+        context.read<GameCubit>().addPlayer(name.capitalize());
         _focusNode.requestFocus();
       },
     );

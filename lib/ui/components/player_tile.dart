@@ -5,6 +5,7 @@ import 'package:munchkin/models/models.dart';
 import 'package:munchkin/ui/components/button.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_color/flutter_color.dart';
+import 'package:munchkin/ui/components/snackbar_redo.dart';
 
 class PlayerTile extends StatelessWidget {
   final Player player;
@@ -73,7 +74,16 @@ class PlayerTile extends StatelessWidget {
               color: context.theme().errorColor,
               onPressed: player.gear == 0
                   ? null
-                  : () => context.read<GameCubit>().killPlayer(player.id),
+                  : () {
+                      context.read<GameCubit>().killPlayer(player.id);
+                      Scaffold.of(context).showSnackBar(SnackBar(
+                        padding: const EdgeInsets.symmetric(vertical: 0),
+                        content: RedoSnackbar(
+                            title: '${player.name} has died',
+                            color: Colors.white,
+                            onAction: context.read<GameCubit>().undo),
+                      ));
+                    },
             ),
           ],
         ),

@@ -195,5 +195,20 @@ void main() {
         expect: [
           GameState(players: [], maxLevelTrigger: 20, hasJustStarted: false),
         ]);
+
+    blocTest('Game finished when one player reaches the max level',
+        build: () => gameCubit,
+        seed: GameState(players: [
+          Player(id: 'id', name: 'Mabe', level: 19),
+          Player(id: 'temp_id', name: 'Temp')
+        ], maxLevelTrigger: 20, hasJustStarted: false),
+        act: (GameCubit cubit) => cubit.addLevelToPlayer('id', 1),
+        skip: 1,
+        expect: [
+          GameState(players: [
+            Player(id: 'id', name: 'Mabe', level: 20),
+            Player(id: 'temp_id', name: 'Temp')
+          ], maxLevelTrigger: 20, hasJustStarted: false, gameFinished: true),
+        ]);
   });
 }

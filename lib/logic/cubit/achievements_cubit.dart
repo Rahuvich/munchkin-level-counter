@@ -38,13 +38,17 @@ class AchievementsCubit extends HydratedCubit<AchievementsState> {
     return _battleSubscription = battleCubit.listen((state) {
       if (state.battleFinished) {
         if (state.playerStrength > state.monstersStrength)
-          playerWonBattle(
-              state.player,
-              state.monsters.fold(0, (sum, monster) => sum + monster.treasures),
-              state.monsters.length,
-              state.ally);
+          playerKilledMonsters(
+            state.player,
+            state.monsters.fold(0, (sum, monster) => sum + monster.treasures),
+            state.monsters.length,
+          );
         else
           playerLostBattle(state.player);
+
+        if (state.ally == null) {
+          playerHasFoughtAlone(state.player);
+        }
       }
     });
   }
@@ -55,8 +59,15 @@ class AchievementsCubit extends HydratedCubit<AchievementsState> {
         strongest: StringAndInt(string: player.id, value: player.strength),
       ));
 
-  void playerWonBattle(
-      Player player, int treasuresWon, int monsters, Player ally) {
+  void playerHasFoughtAlone(Player player) {
+    Map<String, int> mostLonelyBoyMod = Map.from(this.state.mostLonelyBoy);
+    mostLonelyBoyMod.update(player.id, (fightsTillNow) => fightsTillNow + 1,
+        ifAbsent: () => 1);
+
+    emit(this.state.copyWith(mostLonelyBoy: mostLonelyBoyMod));
+  }
+
+  void playerKilledMonsters(Player player, int treasuresWon, int monsters) {
     Map<String, int> mostMonstersKilledMod =
         Map.from(this.state.mostMonstersKilled);
     mostMonstersKilledMod.update(
@@ -70,16 +81,9 @@ class AchievementsCubit extends HydratedCubit<AchievementsState> {
           ifAbsent: () => treasuresWon);
     }
 
-    Map<String, int> mostLonelyBoyMod = Map.from(this.state.mostLonelyBoy);
-    if (ally == null) {
-      mostLonelyBoyMod.update(player.id, (fightsTillNow) => fightsTillNow + 1,
-          ifAbsent: () => 1);
-    }
-
     emit(this.state.copyWith(
         mostMonstersKilled: mostMonstersKilledMod,
-        mostTreasures: mostTreasuresMod,
-        mostLonelyBoy: mostLonelyBoyMod));
+        mostTreasures: mostTreasuresMod));
   }
 
   void playerLostBattle(Player player) {

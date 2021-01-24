@@ -67,7 +67,8 @@ class AppTheme {
         iconTheme: iconTheme,
         elevation: 0,
         brightness: isLight ? Brightness.light : Brightness.dark,
-        color: isLight ? kPrimaryColor : kPrimaryColorDark,
+        color:
+            isLight ? kSecondaryBackgroundColor : kSecondaryBackgroundColorDark,
         textTheme: textTheme ?? baseTheme.textTheme);
   }
 
@@ -82,7 +83,15 @@ class AppTheme {
 
   static SnackBarThemeData _getSnackBarTheme(SnackBarThemeData baseTheme) {
     return baseTheme.copyWith(
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)));
+        /* behavior: SnackBarBehavior.floating,
+          margin: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 10.0), */
+        shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(20),
+          topRight: Radius.circular(20),
+        )),
+        elevation: 0.0,
+        backgroundColor: kerrorColor);
   }
 
   static TextTheme _getTextTheme(TextTheme baseTheme, bool isLight) {

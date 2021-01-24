@@ -18,7 +18,6 @@ class PlayersPage extends StatelessWidget {
       slivers: [
         SliverAppBar(
           pinned: true,
-          backgroundColor: context.theme().scaffoldBackgroundColor,
           title: Text(
             'Players',
             style: context.theme().textTheme.headline3,

@@ -13,7 +13,6 @@ class SettingsPage extends StatelessWidget {
       slivers: [
         SliverAppBar(
           pinned: true,
-          backgroundColor: context.theme().scaffoldBackgroundColor,
           title: Text(
             'Settings',
             style: context.theme().textTheme.headline3,

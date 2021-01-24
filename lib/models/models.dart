@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:equatable/equatable.dart';
 
+export 'package:flutter_color/flutter_color.dart';
 export 'package:munchkin/models/constants.dart';
 export 'package:munchkin/models/extensions.dart';
 export 'package:munchkin/models/munchkin.dart';

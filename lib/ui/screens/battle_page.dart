@@ -5,6 +5,7 @@ import 'package:munchkin/logic/cubit/game_cubit.dart';
 import 'package:munchkin/models/models.dart';
 import 'package:munchkin/ui/components/battle_components.dart';
 import 'package:munchkin/ui/components/button.dart';
+import 'package:munchkin/ui/components/snackbar_redo.dart';
 
 class BattlePage extends StatelessWidget {
   final VoidCallback onBack;
@@ -30,34 +31,49 @@ class BattlePage extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              PlayerInBattle(),
-              ScoreBattle(),
-              MonstersInBattle(),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  FancyButton(
-                    child: Text(
-                      'Add monster',
-                      style: context.theme().textTheme.bodyText1,
+              Expanded(child: PlayerInBattle()),
+              Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 20),
+                  child: ScoreBattle()),
+              Expanded(child: MonstersInBattle()),
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 30),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    FancyButton(
+                      child: Text(
+                        'Add monster',
+                        style: context.theme().textTheme.bodyText1,
+                      ),
+                      size: 30,
+                      color: context.theme().accentColor,
+                      onPressed: () => context.read<BattleCubit>().addMonster(),
                     ),
-                    size: 30,
-                    color: context.theme().accentColor,
-                    onPressed: () => context.read<BattleCubit>().addMonster(),
-                  ),
-                  FancyButton(
-                    onPressed: () {
-                      context.read<BattleCubit>().endBattle();
-                      onBack.call();
-                    },
-                    child: Text(
-                      'End battle',
-                      style: context.theme().textTheme.bodyText1,
+                    FancyButton(
+                      onPressed: () {
+                        context.read<BattleCubit>().endBattle();
+                        onBack.call();
+                        Scaffold.of(context).showSnackBar(SnackBar(
+                          padding: const EdgeInsets.symmetric(vertical: 0),
+                          content: RedoSnackbar(
+                              title: state.playerStrength >
+                                      state.monstersStrength
+                                  ? '${state.player.name} has won the battle'
+                                  : '${state.player.name} has lost the battle',
+                              color: Colors.white,
+                              onAction: context.read<GameCubit>().undo),
+                        ));
+                      },
+                      child: Text(
+                        'End battle',
+                        style: context.theme().textTheme.bodyText1,
+                      ),
+                      size: 30,
+                      color: context.theme().errorColor,
                     ),
-                    size: 30,
-                    color: context.theme().accentColor,
-                  ),
-                ],
+                  ],
+                ),
               ),
             ],
           ),

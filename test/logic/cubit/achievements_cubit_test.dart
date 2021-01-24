@@ -48,8 +48,11 @@ void main() {
         () async {
       expectLater(
           achievementsCubit,
-          emits(AchievementsState(
-              mostMonstersKilled: {'id': 2}, mostLonelyBoy: {'id': 1})));
+          emitsInAnyOrder([
+            AchievementsState(mostMonstersKilled: {'id': 2}),
+            AchievementsState(
+                mostMonstersKilled: {'id': 2}, mostLonelyBoy: {'id': 1})
+          ]));
 
       battleCubit.addModifiersToMonster('monster_id', -5);
       battleCubit.addMonster(id: 'monster_id_2');
@@ -63,10 +66,16 @@ void main() {
         () async {
       expectLater(
           achievementsCubit,
-          emits(AchievementsState(
+          emitsInAnyOrder([
+            AchievementsState(
               mostMonstersKilled: {'id': 1},
               mostTreasures: {'id': 10},
-              mostLonelyBoy: {'id': 1})));
+            ),
+            AchievementsState(
+                mostMonstersKilled: {'id': 1},
+                mostTreasures: {'id': 10},
+                mostLonelyBoy: {'id': 1}),
+          ]));
 
       battleCubit.addModifiersToMonster('monster_id', -5);
       battleCubit.addTreasuresToMonster('monster_id', 10);
@@ -76,8 +85,11 @@ void main() {
     test('Should track when a player wins a battle alone', () async {
       expectLater(
           achievementsCubit,
-          emits(AchievementsState(
-              mostMonstersKilled: {'id': 1}, mostLonelyBoy: {'id': 1})));
+          emitsInAnyOrder([
+            AchievementsState(mostMonstersKilled: {'id': 1}),
+            AchievementsState(
+                mostMonstersKilled: {'id': 1}, mostLonelyBoy: {'id': 1}),
+          ]));
       battleCubit.addModifiersToMonster('monster_id', -5);
       battleCubit.endBattle();
     });

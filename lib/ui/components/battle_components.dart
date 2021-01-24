@@ -225,20 +225,19 @@ class MonstersInBattle extends StatelessWidget {
   Widget build(BuildContext context) {
     List<Monster> monsters = context
         .select<BattleCubit, List<Monster>>((cubit) => cubit.state.monsters);
-    return SingleChildScrollView(
-      scrollDirection: Axis.horizontal,
-      child: Row(
-          children: monsters
-              .asMap()
-              .map((index, m) => MapEntry(
-                  index,
-                  SingleMonsterInBattle(
-                    deleteable: monsters.length > 1,
-                    monster: m,
-                    index: index + 1,
-                  )))
-              .values
-              .toList()),
+
+    return PageView(
+      children: monsters
+          .asMap()
+          .map((index, m) => MapEntry(
+              index,
+              SingleMonsterInBattle(
+                deleteable: monsters.length > 1,
+                monster: m,
+                index: index + 1,
+              )))
+          .values
+          .toList(),
     );
   }
 }
@@ -252,6 +251,7 @@ class SingleMonsterInBattle extends StatelessWidget {
   Widget build(BuildContext context) {
     return GlassCard(
       child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
           SizedBox(
             height: 10,

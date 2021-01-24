@@ -1,13 +1,14 @@
 import 'package:equatable/equatable.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:munchkin/models/models.dart';
+import 'package:replay_bloc/replay_bloc.dart';
 import 'package:uuid/uuid.dart';
 import 'dart:math' as math;
 import 'dart:convert';
 
 part 'game_state.dart';
 
-class GameCubit extends HydratedCubit<GameState> {
+class GameCubit extends HydratedCubit<GameState> with ReplayCubitMixin {
   GameCubit() : super(GameState());
 
   void addPlayer(String name, {String id}) => emit(this.state.copyWith(
@@ -26,14 +27,20 @@ class GameCubit extends HydratedCubit<GameState> {
   }
 
   void addLevelToPlayer(String id, int count) {
+    int newLevel = 0;
+
     List<Player> list = this.state.players.map((player) {
       if (player.id == id) {
-        return player.copyWith(level: math.max(player.level + count, 1));
+        newLevel = math.max(player.level + count, 1);
+        return player.copyWith(level: newLevel);
       }
       return player;
     }).toList();
 
     emit(this.state.copyWith(players: List.unmodifiable(list)));
+
+    if (newLevel == this.state.maxLevelTrigger)
+      emit(this.state.copyWith(gameFinished: true));
   }
 
   void addGearToPlayer(String id, int count) {
