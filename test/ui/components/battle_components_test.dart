@@ -55,11 +55,6 @@ void main() {
         ),
       );
 
-      /* whenListen(
-          battleCubit,
-          Stream.fromIterable(
-              [BattleState(player: player, modifiers: modifiers)])); */
-
       await tester.pumpWidget(makeTestableWidget(child: PlayerInBattle()));
 
       await tester.pumpAndSettle();
@@ -89,6 +84,65 @@ void main() {
       expect((allyStrength.evaluate().first.widget as Text).data, '0');
       expect((playerGender.evaluate().first.widget as Icon).icon,
           FontAwesomeIcons.mars);
+    });
+
+    testWidgets('Should show monsters information',
+        (WidgetTester tester) async {
+      Player player = Player(
+          id: 'id', name: 'Mabe', level: 5, gear: 10, gender: Gender.MALE);
+      List<Monster> monsters = [
+        Monster(
+          level: 5,
+          modifiers: 10,
+        ),
+        Monster(
+          level: 1,
+          modifiers: 5,
+        ),
+        Monster(
+          level: 5,
+          modifiers: 20,
+        ),
+      ];
+
+      when(battleCubit.state).thenAnswer(
+        (_) => BattleState(player: player, monsters: monsters),
+      );
+      when(gameCubit.state).thenAnswer(
+        (_) => GameState(
+          players: [player],
+        ),
+      );
+
+      await tester.pumpWidget(makeTestableWidget(child: MonstersInBattle()));
+
+      await tester.pumpAndSettle();
+
+      List<Map<Finder, String>> monstersInfoFinders = monsters
+          .asMap()
+          .map((index, m) => MapEntry(
+              index,
+              new Map<Finder, String>.from(<Finder, String>{
+                find.byKey(Key('battlePage_monster_${index + 1}_name')):
+                    'Monster ${index + 1}',
+                find.byKey(Key('battlePage_monster_${index + 1}_level')):
+                    monsters[index].level.toString(),
+                find.byKey(Key('battlePage_monster_${index + 1}_modifiers')):
+                    monsters[index].modifiers.toString(),
+                find.byKey(Key('battlePage_monster_${index + 1}_treasures')):
+                    monsters[index].treasures.toString()
+              })))
+          .values
+          .toList();
+
+      for (Map<Finder, String> monster in monstersInfoFinders) {
+        for (MapEntry<Finder, String> entry in monster.entries) {
+          expect(entry.key, findsOneWidget);
+          expect((entry.key.evaluate().first.widget as Text).data, entry.value);
+        }
+        await tester.drag(find.byType(PageView), Offset(-500, 0.0));
+        await tester.pumpAndSettle();
+      }
     });
 
     tearDown(() {

@@ -255,6 +255,7 @@ class SingleMonsterInBattle extends StatelessWidget {
   SingleMonsterInBattle({this.deleteable, this.monster, this.index});
   @override
   Widget build(BuildContext context) {
+    print('Monster ${index + 1}');
     return GlassCard(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -278,6 +279,7 @@ class SingleMonsterInBattle extends StatelessWidget {
               Expanded(
                 child: Text(
                   'Monster $index',
+                  key: Key('battlePage_monster_${index}_name'),
                   style: context.theme().textTheme.bodyText1,
                 ),
               ),
@@ -322,6 +324,7 @@ class SingleMonsterInBattle extends StatelessWidget {
             height: 20,
             child: FittedBox(
               child: Text(monster.level.toString(),
+                  key: Key('battlePage_monster_${index}_level'),
                   style: context.theme().textTheme.headline5),
             )),
         FancyButton(
@@ -352,6 +355,7 @@ class SingleMonsterInBattle extends StatelessWidget {
             height: 20,
             child: FittedBox(
               child: Text(monster.modifiers.toString(),
+                  key: Key('battlePage_monster_${index}_modifiers'),
                   style: context.theme().textTheme.headline5),
             )),
         FancyButton(
@@ -385,6 +389,7 @@ class SingleMonsterInBattle extends StatelessWidget {
             height: 20,
             child: FittedBox(
               child: Text(monster.treasures.toString(),
+                  key: Key('battlePage_monster_${index}_treasures'),
                   style: context.theme().textTheme.headline5),
             )),
         FancyButton(
