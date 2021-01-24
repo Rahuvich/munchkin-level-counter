@@ -4,6 +4,7 @@ import 'package:mockito/mockito.dart';
 import 'package:munchkin/logic/cubit/achievements_cubit.dart';
 import 'package:munchkin/logic/cubit/battle_cubit.dart';
 import 'package:munchkin/logic/cubit/game_cubit.dart';
+import 'package:munchkin/models/models.dart';
 import 'package:munchkin/models/munchkin.dart';
 
 class MockStorage extends Mock implements Storage {}
@@ -91,21 +92,19 @@ void main() {
       expectLater(
           achievementsCubit,
           emitsInOrder([
-            AchievementsState(mostStrength: {'id': 2}),
-            AchievementsState(mostStrength: {'id': 3}),
-            AchievementsState(mostStrength: {'id': 3, 'planas_id': 1})
+            AchievementsState(strongest: StringAndInt(string: 'id', value: 2)),
+            AchievementsState(strongest: StringAndInt(string: 'id', value: 3)),
           ]));
       gameCubit.addLevelToPlayer('id', 1);
       gameCubit.addGearToPlayer('id', 1);
-      gameCubit.addPlayer('Planas', id: 'planas_id');
     });
 
     test('Should reset when game is restarted', () async {
       expectLater(
           achievementsCubit,
           emitsInOrder([
-            AchievementsState(mostStrength: {'id': 2}),
-            AchievementsState(mostStrength: {'id': 3}),
+            AchievementsState(strongest: StringAndInt(string: 'id', value: 2)),
+            AchievementsState(strongest: StringAndInt(string: 'id', value: 3)),
             AchievementsState()
           ]));
       gameCubit.addLevelToPlayer('id', 1);

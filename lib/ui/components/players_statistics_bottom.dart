@@ -59,17 +59,16 @@ class PlayersStatisticsBottom extends StatelessWidget {
                   leading: Text('', style: TextStyle(fontFamily: 'Quasimodo')),
                 ),
                 Builder(builder: (context) {
-                  MapEntry<String, int> entry;
+                  StringAndInt entry;
                   Player player;
                   bool enabled = false;
                   try {
-                    entry = context
-                        .select<AchievementsCubit, MapEntry<String, int>>(
-                            (cubit) => cubit.state.mostStrength.entries.first);
+                    entry = context.select<AchievementsCubit, StringAndInt>(
+                        (cubit) => cubit.state.strongest);
 
                     player = context.select<GameCubit, Player>((cubit) => cubit
                         .state.players
-                        .firstWhere((p) => p.id == entry.key));
+                        .firstWhere((p) => p.id == entry.string));
 
                     enabled = true;
                   } catch (e) {}

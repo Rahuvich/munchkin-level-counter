@@ -10,7 +10,12 @@ class Player extends Equatable {
   final Gender gender;
   final int level;
   final int gear;
-  Player({this.id, this.name, this.gender = Gender.MALE, this.level = 1, this.gear = 0});
+  Player(
+      {this.id,
+      this.name,
+      this.gender = Gender.MALE,
+      this.level = 1,
+      this.gear = 0});
 
   Player copyWith({
     String id,

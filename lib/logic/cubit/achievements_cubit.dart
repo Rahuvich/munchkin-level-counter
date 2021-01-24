@@ -24,17 +24,11 @@ class AchievementsCubit extends Cubit<AchievementsState> {
       if (state.hasJustStarted) {
         resetAchievements();
       } else {
-        bool playersLengthMatch =
-            state.players.length == this.state.mostStrength.length;
-        bool allPlayersAreRecordedAndItsStrengthIsInferior = state.players
-            .every((player) =>
-                this.state.mostStrength.containsKey(player.id) &&
-                this.state.mostStrength[player.id] >= player.strength);
-
-        if (!playersLengthMatch ||
-            !allPlayersAreRecordedAndItsStrengthIsInferior) {
-          updateStrength(state.players);
-        }
+        state.players.forEach((player) {
+          if (player.strength > this.state.strongest.value) {
+            updateStrength(player);
+          }
+        });
       }
     });
   }
@@ -54,53 +48,11 @@ class AchievementsCubit extends Cubit<AchievementsState> {
     });
   }
 
-  // * Unused
-  void removePlayer(String id) {
-    Map<String, int> mostMonstersKilledMod =
-        Map.from(this.state.mostMonstersKilled);
-    mostMonstersKilledMod.removeWhere((playerId, value) => playerId == id);
-
-    Map<String, int> mostStrengthMod = Map.from(this.state.mostStrength);
-    mostStrengthMod.removeWhere((playerId, value) => playerId == id);
-
-    Map<String, int> mostLonelyBoyMod = Map.from(this.state.mostLonelyBoy);
-    mostLonelyBoyMod.removeWhere((playerId, value) => playerId == id);
-
-    Map<String, int> mostTreasuresMod = Map.from(this.state.mostTreasures);
-    mostTreasuresMod.removeWhere((playerId, value) => playerId == id);
-
-    Map<String, int> mostLostBattlesMod = Map.from(this.state.mostLostBattles);
-    mostLostBattlesMod.removeWhere((playerId, value) => playerId == id);
-    emit(this.state.copyWith(
-        mostTreasures: sortMap(mostTreasuresMod),
-        mostLonelyBoy: sortMap(mostLonelyBoyMod),
-        mostStrength: sortMap(mostStrengthMod),
-        mostMonstersKilled: sortMap(mostMonstersKilledMod),
-        mostLostBattles: sortMap(mostLostBattlesMod)));
-  }
-
   void resetAchievements() => emit(AchievementsState());
 
-  void updateStrength(List<Player> players) {
-    Map<String, int> map = {};
-
-    for (Player player in players) {
-      final maxStrength = this
-          .state
-          .mostStrength
-          .entries
-          .firstWhere((entry) => entry.key == player.id,
-              orElse: () => MapEntry(player.id, 0))
-          .value;
-
-      map.putIfAbsent(player.id,
-          () => maxStrength >= player.strength ? maxStrength : player.strength);
-    }
-
-    emit(this.state.copyWith(
-          mostStrength: sortMap(map),
-        ));
-  }
+  void updateStrength(Player player) => emit(this.state.copyWith(
+        strongest: StringAndInt(string: player.id, value: player.strength),
+      ));
 
   void playerWonBattle(
       Player player, int treasuresWon, int monsters, Player ally) {
@@ -124,9 +76,9 @@ class AchievementsCubit extends Cubit<AchievementsState> {
     }
 
     emit(this.state.copyWith(
-        mostMonstersKilled: sortMap(mostMonstersKilledMod),
-        mostTreasures: sortMap(mostTreasuresMod),
-        mostLonelyBoy: sortMap(mostLonelyBoyMod)));
+        mostMonstersKilled: mostMonstersKilledMod,
+        mostTreasures: mostTreasuresMod,
+        mostLonelyBoy: mostLonelyBoyMod));
   }
 
   void playerLostBattle(Player player) {
@@ -137,12 +89,6 @@ class AchievementsCubit extends Cubit<AchievementsState> {
     emit(this.state.copyWith(
           mostLostBattles: mostLostBattlesMod,
         ));
-  }
-
-  Map<String, int> sortMap(Map<String, int> map) {
-    return LinkedHashMap.from(
-      SplayTreeMap.from(map, (key1, key2) => map[key2].compareTo(map[key1])),
-    );
   }
 
   @override
