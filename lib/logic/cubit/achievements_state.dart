@@ -55,4 +55,31 @@ class AchievementsState extends Equatable {
                 map, (key1, key2) => map[key2].compareTo(map[key1])),
           );
   }
+
+  Map<String, dynamic> toMap() {
+    return {
+      'mostTreasures': mostTreasures,
+      'mostMonstersKilled': mostMonstersKilled,
+      'mostLonelyBoy': mostLonelyBoy,
+      'mostLostBattles': mostLostBattles,
+      'strongest': strongest?.toMap(),
+    };
+  }
+
+  factory AchievementsState.fromMap(Map<String, dynamic> map) {
+    if (map == null) return null;
+
+    return AchievementsState(
+      mostTreasures: Map<String, int>.from(map['mostTreasures']),
+      mostMonstersKilled: Map<String, int>.from(map['mostMonstersKilled']),
+      mostLonelyBoy: Map<String, int>.from(map['mostLonelyBoy']),
+      mostLostBattles: Map<String, int>.from(map['mostLostBattles']),
+      strongest: StringAndInt.fromMap(map['strongest']),
+    );
+  }
+
+  String toJson() => json.encode(toMap());
+
+  factory AchievementsState.fromJson(String source) =>
+      AchievementsState.fromMap(json.decode(source));
 }

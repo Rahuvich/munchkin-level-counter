@@ -1,15 +1,16 @@
 import 'dart:async';
 import 'dart:collection';
 
-import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:munchkin/logic/cubit/battle_cubit.dart';
 import 'package:munchkin/logic/cubit/game_cubit.dart';
+import 'dart:convert';
 import 'package:munchkin/models/models.dart';
 
 part 'achievements_state.dart';
 
-class AchievementsCubit extends Cubit<AchievementsState> {
+class AchievementsCubit extends HydratedCubit<AchievementsState> {
   BattleCubit battleCubit;
 
   StreamSubscription _gameSubscription;
@@ -97,4 +98,11 @@ class AchievementsCubit extends Cubit<AchievementsState> {
     _battleSubscription.cancel();
     return super.close();
   }
+
+  @override
+  AchievementsState fromJson(Map<String, dynamic> json) =>
+      AchievementsState.fromMap(json);
+
+  @override
+  Map<String, dynamic> toJson(AchievementsState state) => state.toMap();
 }
