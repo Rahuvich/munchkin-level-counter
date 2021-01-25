@@ -6,6 +6,7 @@ import 'package:munchkin/ui/components/new_player.dart';
 import 'package:munchkin/ui/components/player_tile.dart';
 import 'package:munchkin/ui/components/players_settings_bottom.dart';
 import 'package:munchkin/ui/components/players_game_heroes_bottom.dart';
+import 'package:munchkin/ui/keys/widget_keys.dart';
 
 class PlayersPage extends StatelessWidget {
   final Function(Player) onBattle;
@@ -20,11 +21,13 @@ class PlayersPage extends StatelessWidget {
           pinned: true,
           title: Text(
             'Players',
+            key: Key(PlayersPageTitle),
             style: context.theme().textTheme.headline3,
           ),
           actions: [
             IconButton(
               icon: Icon(Icons.bar_chart_rounded),
+              key: Key(PlayersPageGameHeroesButton),
               onPressed: () {
                 showModalBottomSheet(
                   context: context,
@@ -35,6 +38,7 @@ class PlayersPage extends StatelessWidget {
             ),
             IconButton(
               icon: Icon(Icons.tune_rounded),
+              key: Key(PlayersPageMoreOptionsButton),
               onPressed: () {
                 showModalBottomSheet(
                   context: context,

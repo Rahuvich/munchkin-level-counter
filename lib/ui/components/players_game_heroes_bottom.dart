@@ -3,6 +3,7 @@ import 'package:munchkin/logic/cubit/achievements_cubit.dart';
 import 'package:munchkin/logic/cubit/game_cubit.dart';
 import 'package:munchkin/models/models.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:munchkin/ui/keys/widget_keys.dart';
 
 class PlayersGameHeroesBottom extends StatelessWidget {
   @override
@@ -16,8 +17,8 @@ class PlayersGameHeroesBottom extends StatelessWidget {
           color: context.theme().scaffoldBackgroundColor,
           child: Padding(
             padding: const EdgeInsets.all(8.0),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
+            child: ListView(
+              shrinkWrap: true,
               children: [
                 mostTreasures(),
                 mostMonstersKilled(),
@@ -57,6 +58,7 @@ class PlayersGameHeroesBottom extends StatelessWidget {
           height: 40,
           child: Center(
             child: Text('${entry?.value ?? ''}',
+                key: Key(PlayersPageGameHeroesBottomSheetBountyHunterValue),
                 style: context.theme().textTheme.headline5),
           ),
         ),
@@ -89,6 +91,8 @@ class PlayersGameHeroesBottom extends StatelessWidget {
           height: 40,
           child: Center(
             child: Text('${entry?.value ?? ''}',
+                key:
+                    Key(PlayersPageGameHeroesBottomSheetNaturalBornKillerValue),
                 style: context.theme().textTheme.headline5),
           ),
         ),
@@ -121,6 +125,7 @@ class PlayersGameHeroesBottom extends StatelessWidget {
           height: 40,
           child: Center(
             child: Text('${entry?.value ?? ''}',
+                key: Key(PlayersPageGameHeroesBottomSheetLonelyBoyValue),
                 style: context.theme().textTheme.headline5),
           ),
         ),
@@ -152,6 +157,7 @@ class PlayersGameHeroesBottom extends StatelessWidget {
           height: 40,
           child: Center(
             child: Text('${entry?.value ?? ''}',
+                key: Key(PlayersPageGameHeroesBottomSheetFeederValue),
                 style: context.theme().textTheme.headline5),
           ),
         ),
@@ -184,6 +190,7 @@ class PlayersGameHeroesBottom extends StatelessWidget {
           height: 40,
           child: Center(
             child: Text(enabled ? '${entry?.value ?? ''}' : '',
+                key: Key(PlayersPageGameHeroesBottomSheetArmedToTheTeethValue),
                 style: context.theme().textTheme.headline5),
           ),
         ),

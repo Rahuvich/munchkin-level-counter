@@ -6,6 +6,7 @@ import 'package:munchkin/ui/components/button.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_color/flutter_color.dart';
 import 'package:munchkin/ui/components/snackbar_redo.dart';
+import 'package:munchkin/ui/keys/widget_keys.dart';
 
 class PlayerTile extends StatelessWidget {
   final Player player;
@@ -25,9 +26,11 @@ class PlayerTile extends StatelessWidget {
           context.read<GameCubit>().removePlayer(player.id),
       key: Key(player.id),
       child: ExpansionTile(
+        key: Key(PlayersPagePlayerTileExpansionTile),
         initiallyExpanded: forceExpanded,
         maintainState: false,
         leading: FancyButton(
+          key: Key(PlayersPagePlayerTileGenderButton),
           color: context.theme().accentColor,
           size: 20,
           onPressed: () =>
@@ -36,6 +39,7 @@ class PlayerTile extends StatelessWidget {
             player.gender == Gender.MALE
                 ? FontAwesomeIcons.mars
                 : FontAwesomeIcons.venus,
+            key: Key(PlayersPagePlayerTileGender),
             color: player.gender == Gender.MALE
                 ? Colors.blueAccent
                 : Colors.pinkAccent,
@@ -43,6 +47,7 @@ class PlayerTile extends StatelessWidget {
         ),
         title: Text(
           player.name,
+          key: Key(PlayersPagePlayerTileName),
           style: context.theme().textTheme.bodyText1,
         ),
         subtitle: Text('Level ${player.level} – Strength ${player.strength}'),
@@ -59,6 +64,7 @@ class PlayerTile extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             FancyButton(
+              key: Key(PlayersPagePlayerTileBattleButton),
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 18.0),
                 child:
@@ -69,6 +75,7 @@ class PlayerTile extends StatelessWidget {
               onPressed: () => onBattle.call(player),
             ),
             FancyButton(
+              key: Key(PlayersPagePlayerTileDieButton),
               child: Icon(FontAwesomeIcons.skull),
               size: 30,
               color: context.theme().errorColor,
@@ -92,6 +99,7 @@ class PlayerTile extends StatelessWidget {
       Padding(
         padding: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
         child: Text(player.strength.toString(),
+            key: Key(PlayersPagePlayerTileStrength),
             style: context.theme().textTheme.headline3),
       ),
       Row(
@@ -105,6 +113,7 @@ class PlayerTile extends StatelessWidget {
                 child: Row(
                   children: [
                     FancyButton(
+                      key: Key(PlayersPagePlayerTileLevelDownButton),
                       child: Icon(Icons.expand_more),
                       size: 20,
                       color: context.theme().accentColor,
@@ -119,12 +128,14 @@ class PlayerTile extends StatelessWidget {
                         height: 20,
                         child: FittedBox(
                           child: Text(player.level.toString(),
+                              key: Key(PlayersPagePlayerTileLevel),
                               style: context.theme().textTheme.headline5),
                         )),
                     FancyButton(
                       child: Icon(Icons.expand_less),
                       size: 20,
                       color: context.theme().accentColor,
+                      key: Key(PlayersPagePlayerTileLevelUpButton),
                       onPressed: () => context
                           .read<GameCubit>()
                           .addLevelToPlayer(player.id, 1),
@@ -145,6 +156,7 @@ class PlayerTile extends StatelessWidget {
                       child: Icon(Icons.expand_more),
                       size: 20,
                       color: context.theme().accentColor,
+                      key: Key(PlayersPagePlayerTileGearDownButton),
                       onPressed: player.gear == 0
                           ? null
                           : () => context
@@ -156,12 +168,14 @@ class PlayerTile extends StatelessWidget {
                         height: 20,
                         child: FittedBox(
                           child: Text(player.gear.toString(),
+                              key: Key(PlayersPagePlayerTileGear),
                               style: context.theme().textTheme.headline5),
                         )),
                     FancyButton(
                       child: Icon(Icons.expand_less),
                       size: 20,
                       color: context.theme().accentColor,
+                      key: Key(PlayersPagePlayerTileGearUpButton),
                       onPressed: () => context
                           .read<GameCubit>()
                           .addGearToPlayer(player.id, 1),

@@ -8,13 +8,14 @@ import 'package:munchkin/logic/cubit/battle_cubit.dart';
 import 'package:munchkin/logic/cubit/game_cubit.dart';
 import 'package:munchkin/models/models.dart';
 import 'package:munchkin/ui/components/battle_components.dart';
+import 'package:munchkin/ui/keys/widget_keys.dart';
 
 class MockBattleCubit extends MockBloc<BattleState> implements BattleCubit {}
 
 class MockGameCubit extends MockBloc<GameState> implements GameCubit {}
 
 void main() {
-  group('Player Card', () {
+  group('Battle Components Cards', () {
     MockBattleCubit battleCubit;
     MockGameCubit gameCubit;
 
@@ -59,13 +60,13 @@ void main() {
 
       await tester.pumpAndSettle();
 
-      Finder playerName = find.byKey(Key('battlePage_player_name'));
-      Finder playerGender = find.byKey(Key('battlePage_player_gender'));
+      Finder playerName = find.byKey(Key(BattlePagePlayerName));
+      Finder playerGender = find.byKey(Key(BattlePagePlayerGender));
 
-      Finder playerLevel = find.byKey(Key('battlePage_player_level'));
-      Finder playerGear = find.byKey(Key('battlePage_player_gear'));
-      Finder playerModifiers = find.byKey(Key('battlePage_player_modifiers'));
-      Finder allyStrength = find.byKey(Key('battlePage_player_ally_strength'));
+      Finder playerLevel = find.byKey(Key(BattlePagePlayerLevel));
+      Finder playerGear = find.byKey(Key(BattlePagePlayerGear));
+      Finder playerModifiers = find.byKey(Key(BattlePagePlayerModifiers));
+      Finder allyStrength = find.byKey(Key(BattlePagePlayerAllyStrength));
 
       expect(playerName, findsOneWidget);
       expect(playerGender, findsOneWidget);
@@ -108,11 +109,6 @@ void main() {
       when(battleCubit.state).thenAnswer(
         (_) => BattleState(player: player, monsters: monsters),
       );
-      when(gameCubit.state).thenAnswer(
-        (_) => GameState(
-          players: [player],
-        ),
-      );
 
       await tester.pumpWidget(makeTestableWidget(child: MonstersInBattle()));
 
@@ -123,13 +119,13 @@ void main() {
           .map((index, m) => MapEntry(
               index,
               new Map<Finder, String>.from(<Finder, String>{
-                find.byKey(Key('battlePage_monster_${index + 1}_name')):
+                find.byKey(Key('$BattlePageMonstersName${index + 1}')):
                     'Monster ${index + 1}',
-                find.byKey(Key('battlePage_monster_${index + 1}_level')):
+                find.byKey(Key('$BattlePageMonstersLevel${index + 1}')):
                     monsters[index].level.toString(),
-                find.byKey(Key('battlePage_monster_${index + 1}_modifiers')):
+                find.byKey(Key('$BattlePageMonstersModifiers${index + 1}')):
                     monsters[index].modifiers.toString(),
-                find.byKey(Key('battlePage_monster_${index + 1}_treasures')):
+                find.byKey(Key('$BattlePageMonstersTreasures${index + 1}')):
                     monsters[index].treasures.toString()
               })))
           .values
@@ -147,6 +143,7 @@ void main() {
 
     tearDown(() {
       battleCubit.close();
+      gameCubit.close();
     });
   });
 }

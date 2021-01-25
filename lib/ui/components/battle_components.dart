@@ -6,6 +6,7 @@ import 'package:munchkin/logic/cubit/game_cubit.dart';
 import 'package:munchkin/models/models.dart';
 import 'package:munchkin/ui/components/ally_bottom.dart';
 import 'package:munchkin/ui/components/button.dart';
+import 'package:munchkin/ui/keys/widget_keys.dart';
 
 class PlayerInBattle extends StatelessWidget {
   @override
@@ -33,7 +34,7 @@ class PlayerInBattle extends StatelessWidget {
                   player.gender == Gender.MALE
                       ? FontAwesomeIcons.mars
                       : FontAwesomeIcons.venus,
-                  key: Key('battlePage_player_gender'),
+                  key: Key(BattlePagePlayerGender),
                   color: player.gender == Gender.MALE
                       ? Colors.blueAccent
                       : Colors.pinkAccent,
@@ -47,7 +48,7 @@ class PlayerInBattle extends StatelessWidget {
                   allyPlayer == null
                       ? player.name
                       : '${player.name} x ${allyPlayer.name}',
-                  key: Key('battlePage_player_name'),
+                  key: Key(BattlePagePlayerName),
                   style: context.theme().textTheme.bodyText1,
                 ),
               ),
@@ -95,7 +96,7 @@ class PlayerInBattle extends StatelessWidget {
             height: 20,
             child: FittedBox(
               child: Text(player.level.toString(),
-                  key: Key('battlePage_player_level'),
+                  key: Key(BattlePagePlayerLevel),
                   style: context.theme().textTheme.headline5),
             )),
         FancyButton(
@@ -127,7 +128,7 @@ class PlayerInBattle extends StatelessWidget {
             height: 20,
             child: FittedBox(
               child: Text(player.gear.toString(),
-                  key: Key('battlePage_player_gear'),
+                  key: Key(BattlePagePlayerGear),
                   style: context.theme().textTheme.headline5),
             )),
         FancyButton(
@@ -157,7 +158,7 @@ class PlayerInBattle extends StatelessWidget {
             height: 20,
             child: FittedBox(
               child: Text(modifiersNum.toString(),
-                  key: Key('battlePage_player_modifiers'),
+                  key: Key(BattlePagePlayerModifiers),
                   style: context.theme().textTheme.headline5),
             )),
         FancyButton(
@@ -180,7 +181,7 @@ class PlayerInBattle extends StatelessWidget {
             height: 20,
             child: FittedBox(
               child: Text(ally?.strength?.toString() ?? 0.toString(),
-                  key: Key('battlePage_player_ally_strength'),
+                  key: Key(BattlePagePlayerAllyStrength),
                   style: context.theme().textTheme.headline5),
             )),
         Builder(builder: (context) {
@@ -255,7 +256,6 @@ class SingleMonsterInBattle extends StatelessWidget {
   SingleMonsterInBattle({this.deleteable, this.monster, this.index});
   @override
   Widget build(BuildContext context) {
-    print('Monster ${index + 1}');
     return GlassCard(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -279,7 +279,7 @@ class SingleMonsterInBattle extends StatelessWidget {
               Expanded(
                 child: Text(
                   'Monster $index',
-                  key: Key('battlePage_monster_${index}_name'),
+                  key: Key(BattlePageMonstersName + index.toString()),
                   style: context.theme().textTheme.bodyText1,
                 ),
               ),
@@ -324,7 +324,7 @@ class SingleMonsterInBattle extends StatelessWidget {
             height: 20,
             child: FittedBox(
               child: Text(monster.level.toString(),
-                  key: Key('battlePage_monster_${index}_level'),
+                  key: Key(BattlePageMonstersLevel + index.toString()),
                   style: context.theme().textTheme.headline5),
             )),
         FancyButton(
@@ -355,7 +355,7 @@ class SingleMonsterInBattle extends StatelessWidget {
             height: 20,
             child: FittedBox(
               child: Text(monster.modifiers.toString(),
-                  key: Key('battlePage_monster_${index}_modifiers'),
+                  key: Key(BattlePageMonstersModifiers + index.toString()),
                   style: context.theme().textTheme.headline5),
             )),
         FancyButton(
@@ -389,7 +389,7 @@ class SingleMonsterInBattle extends StatelessWidget {
             height: 20,
             child: FittedBox(
               child: Text(monster.treasures.toString(),
-                  key: Key('battlePage_monster_${index}_treasures'),
+                  key: Key(BattlePageMonstersTreasures + index.toString()),
                   style: context.theme().textTheme.headline5),
             )),
         FancyButton(
