@@ -1,12 +1,10 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:munchkin/logic/cubit/achievements_cubit.dart';
-import 'package:munchkin/logic/cubit/battle_cubit.dart';
 import 'package:munchkin/logic/cubit/game_cubit.dart';
 import 'package:munchkin/models/models.dart';
 import 'package:munchkin/ui/components/button.dart';
+import 'package:munchkin/ui/keys/widget_keys.dart';
 
 class EndGamePage extends StatelessWidget {
   @override
@@ -20,6 +18,7 @@ class EndGamePage extends StatelessWidget {
         leading: Container(),
         title: Text(
           '${winnerPlayer.name} wins',
+          key: Key(EndPageTitle),
           style: context.theme().textTheme.headline3,
         ),
       ),
@@ -45,14 +44,30 @@ class EndGamePage extends StatelessWidget {
                     DataColumn(label: Text('Strength'), numeric: true),
                   ],
                   rows: gameCubit.state.players
-                      .map((player) => DataRow(
+                      .asMap()
+                      .map((index, player) => MapEntry(
+                          index,
+                          DataRow(
                               selected: player.id == winnerPlayer.id,
                               cells: [
-                                DataCell(Text(player.name)),
-                                DataCell(Text(player.level.toString())),
-                                DataCell(Text(player.gear.toString())),
-                                DataCell(Text(player.strength.toString())),
-                              ]))
+                                DataCell(Text(
+                                  player.name,
+                                  key: Key('$EndPagePlayerName$index'),
+                                )),
+                                DataCell(Text(
+                                  player.level.toString(),
+                                  key: Key('$EndPagePlayerLevel$index'),
+                                )),
+                                DataCell(Text(
+                                  player.gear.toString(),
+                                  key: Key('$EndPagePlayerGear$index'),
+                                )),
+                                DataCell(Text(
+                                  player.strength.toString(),
+                                  key: Key('$EndPagePlayerStrength$index'),
+                                )),
+                              ])))
+                      .values
                       .toList(),
                 ),
               ),
@@ -72,7 +87,7 @@ class EndGamePage extends StatelessWidget {
                   DataColumn(label: Text('Monsters killed'), numeric: true),
                   DataColumn(label: Text('Treasures'), numeric: true),
                   DataColumn(label: Text('Battles alone'), numeric: true),
-                  DataColumn(label: Text('Losts battles'), numeric: true),
+                  DataColumn(label: Text('Lost battles'), numeric: true),
                 ],
                 rows: gameCubit.state.players
                     .map((player) =>
@@ -111,6 +126,7 @@ class EndGamePage extends StatelessWidget {
             children: [
               Expanded(
                 child: FancyButton(
+                  key: Key(EndPageNewGameButton),
                   child: Center(
                     child: Text(
                       'New game',

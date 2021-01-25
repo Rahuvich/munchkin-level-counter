@@ -51,3 +51,11 @@ const BattlePageMonstersName = 'battle_page_monster_name';
 const BattlePageMonstersLevel = 'battle_page_monster_level';
 const BattlePageMonstersModifiers = 'battle_page_monster_modifiers';
 const BattlePageMonstersTreasures = 'battle_page_monster_treasures';
+
+// ? End Page
+const EndPageTitle = 'end_page_title';
+const EndPagePlayerName = 'end_page_player_name';
+const EndPagePlayerLevel = 'end_page_player_level';
+const EndPagePlayerGear = 'end_page_player_gear';
+const EndPagePlayerStrength = 'end_page_player_strength';
+const EndPageNewGameButton = 'end_game_new_game_button';
