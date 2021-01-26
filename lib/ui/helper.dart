@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:munchkin/ui/components/bottom_sheets/social_media_bottom.dart';
+import 'package:munchkin/ui/components/button.dart';
+import 'package:munchkin/models/models.dart';
 
 class Helper {
   static void showSocialMediaBottomSheet(BuildContext context) {
@@ -21,5 +23,63 @@ class Helper {
             )),
             onClosing: () => true,
             builder: (context) => SocialMediaSheet()));
+  }
+
+  static void showConfirmDialog(
+      {BuildContext context,
+      String title,
+      VoidCallback onConfirm,
+      VoidCallback onDismissed,
+      bool destructive}) {
+    showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: Text(
+              title,
+              style: context.theme().textTheme.headline3,
+              textAlign: TextAlign.center,
+            ),
+            actionsPadding:
+                EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
+            actions: [
+              FancyButton(
+                color: !destructive
+                    ? context.theme().errorColor
+                    : context.theme().accentColor,
+                size: 30,
+                child: Center(
+                  child: Text(
+                    'Cancel',
+                    style: context.theme().textTheme.bodyText1,
+                  ),
+                ),
+                onPressed: () {
+                  Navigator.pop(context);
+                  onDismissed?.call();
+                },
+              ),
+              SizedBox(
+                width: 15.0,
+              ),
+              FancyButton(
+                color: destructive
+                    ? context.theme().errorColor
+                    : context.theme().accentColor,
+                size: 30,
+                child: Center(
+                  child: Text(
+                    'Confirm',
+                    style: context.theme().textTheme.bodyText1,
+                  ),
+                ),
+                onPressed: () {
+                  Navigator.pop(context);
+                  onConfirm.call();
+                },
+              )
+            ],
+          );
+        });
   }
 }

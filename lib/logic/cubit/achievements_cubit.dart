@@ -7,10 +7,12 @@ import 'package:munchkin/logic/cubit/battle_cubit.dart';
 import 'package:munchkin/logic/cubit/game_cubit.dart';
 import 'dart:convert';
 import 'package:munchkin/models/models.dart';
+import 'package:replay_bloc/replay_bloc.dart';
 
 part 'achievements_state.dart';
 
-class AchievementsCubit extends HydratedCubit<AchievementsState> {
+class AchievementsCubit extends HydratedCubit<AchievementsState>
+    with ReplayCubitMixin {
   BattleCubit battleCubit;
 
   StreamSubscription _gameSubscription;

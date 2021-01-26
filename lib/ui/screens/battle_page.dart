@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:munchkin/logic/cubit/achievements_cubit.dart';
 import 'package:munchkin/logic/cubit/battle_cubit.dart';
 import 'package:munchkin/logic/cubit/game_cubit.dart';
 import 'package:munchkin/models/models.dart';
 import 'package:munchkin/ui/components/battle_components.dart';
 import 'package:munchkin/ui/components/button.dart';
 import 'package:munchkin/ui/components/snackbar_redo.dart';
+import 'package:munchkin/ui/helper.dart';
 
 class BattlePage extends StatelessWidget {
   final VoidCallback onBack;
@@ -52,18 +54,16 @@ class BattlePage extends StatelessWidget {
                     ),
                     FancyButton(
                       onPressed: () {
-                        context.read<BattleCubit>().endBattle();
-                        onBack.call();
-                        Scaffold.of(context).showSnackBar(SnackBar(
-                          padding: const EdgeInsets.symmetric(vertical: 0),
-                          content: RedoSnackbar(
-                              title: state.playerStrength >
-                                      state.monstersStrength
-                                  ? '${state.player.name} has won the battle'
-                                  : '${state.player.name} has lost the battle',
-                              color: Colors.white,
-                              onAction: context.read<GameCubit>().undo),
-                        ));
+                        Helper.showConfirmDialog(
+                            title: state.playerStrength > state.monstersStrength
+                                ? '${state.player.name} wins'
+                                : '${state.player.name} loses',
+                            destructive: true,
+                            context: context,
+                            onConfirm: () {
+                              context.read<BattleCubit>().endBattle();
+                              onBack.call();
+                            });
                       },
                       child: Text(
                         'End battle',

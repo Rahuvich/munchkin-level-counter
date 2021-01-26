@@ -41,4 +41,32 @@ class BattleState extends Equatable {
       (player?.strength ?? 0) + modifiers + (ally?.strength ?? 0);
   int get monstersStrength =>
       monsters.fold(0, (sum, monster) => sum + monster.strength);
+
+  Map<String, dynamic> toMap() {
+    return {
+      'player': player?.toMap(),
+      'modifiers': modifiers,
+      'ally': ally?.toMap(),
+      'monsters': monsters?.map((x) => x?.toMap())?.toList(),
+      'battleFinished': battleFinished,
+    };
+  }
+
+  factory BattleState.fromMap(Map<String, dynamic> map) {
+    if (map == null) return null;
+
+    return BattleState(
+      player: Player.fromMap(map['player']),
+      modifiers: map['modifiers'],
+      ally: Player.fromMap(map['ally']),
+      monsters:
+          List<Monster>.from(map['monsters']?.map((x) => Monster.fromMap(x))),
+      battleFinished: map['battleFinished'],
+    );
+  }
+
+  String toJson() => json.encode(toMap());
+
+  factory BattleState.fromJson(String source) =>
+      BattleState.fromMap(json.decode(source));
 }

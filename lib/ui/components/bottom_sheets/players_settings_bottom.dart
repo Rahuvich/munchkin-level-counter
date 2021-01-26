@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:munchkin/logic/cubit/game_cubit.dart';
 import 'package:munchkin/models/models.dart';
-import 'package:munchkin/ui/components/snackbar_redo.dart';
 
 class PlayersSettingsBottomSheet extends StatelessWidget {
   @override
@@ -56,7 +55,6 @@ class PlayersSettingsBottomSheet extends StatelessWidget {
                         color: context.theme().errorColor),
                     onTap: () {
                       context.read<GameCubit>().restartGame();
-
                       Navigator.of(context).pop();
                     }),
               ],

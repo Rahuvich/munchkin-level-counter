@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:munchkin/logic/cubit/achievements_cubit.dart';
 import 'package:munchkin/logic/cubit/game_cubit.dart';
 import 'package:munchkin/ui/components/snackbar_redo.dart';
 import 'package:munchkin/models/models.dart';
@@ -31,7 +32,10 @@ class BlocsListener extends StatelessWidget {
                 title: 'Game restarted',
                 subtitle: 'You can undo this action',
                 color: Colors.white,
-                onAction: context.read<GameCubit>().undo),
+                onAction: () {
+                  context.read<GameCubit>().undo();
+                  context.read<AchievementsCubit>().undo();
+                }),
           ));
         },
         child: child,
