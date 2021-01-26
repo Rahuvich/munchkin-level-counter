@@ -91,9 +91,17 @@ class EndGamePage extends StatelessWidget {
                             DataRow(
                                 selected: player.id == winnerPlayer.id,
                                 cells: [
-                                  DataCell(Text(
-                                    player.name,
-                                    key: Key('$EndPagePlayerName$index'),
+                                  DataCell(SizedBox(
+                                    width:
+                                        MediaQuery.of(context).size.width * .2,
+                                    child: Wrap(
+                                      children: [
+                                        Text(
+                                          player.name,
+                                          key: Key('$EndPagePlayerName$index'),
+                                        ),
+                                      ],
+                                    ),
                                   )),
                                   DataCell(Text(
                                     player.level.toString(),
