@@ -22,8 +22,18 @@ class PlayerTile extends StatelessWidget {
     return Dismissible(
       background:
           Container(color: context.theme().scaffoldBackgroundColor.darker(5)),
-      onDismissed: (direction) =>
-          context.read<GameCubit>().removePlayer(player.id),
+      onDismissed: (direction) {
+        context.read<GameCubit>().removePlayer(player.id);
+
+        Scaffold.of(context).showSnackBar(SnackBar(
+          padding: const EdgeInsets.symmetric(vertical: 0),
+          content: RedoSnackbar(
+              title: '${player.name} removed',
+              subtitle: 'You can undo this action',
+              color: Colors.white,
+              onAction: context.read<GameCubit>().undo),
+        ));
+      },
       key: Key(player.id),
       child: ExpansionTile(
         key: Key(PlayersPagePlayerTileExpansionTile),
