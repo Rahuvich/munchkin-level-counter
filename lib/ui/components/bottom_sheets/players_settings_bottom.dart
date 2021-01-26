@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:munchkin/logic/cubit/game_cubit.dart';
 import 'package:munchkin/models/models.dart';
@@ -39,6 +40,7 @@ class PlayersSettingsBottomSheet extends StatelessWidget {
                     leading: Icon(Icons.settings_backup_restore_rounded,
                         color: context.theme().errorColor),
                     onTap: () {
+                      HapticFeedback.lightImpact();
                       context.read<GameCubit>().resetPlayers();
                       Navigator.of(context).pop();
                     }),
@@ -54,6 +56,7 @@ class PlayersSettingsBottomSheet extends StatelessWidget {
                     leading: Icon(Icons.clear_all,
                         color: context.theme().errorColor),
                     onTap: () {
+                      HapticFeedback.lightImpact();
                       context.read<GameCubit>().restartGame();
                       Navigator.of(context).pop();
                     }),

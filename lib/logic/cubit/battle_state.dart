@@ -59,8 +59,8 @@ class BattleState extends Equatable {
       player: Player.fromMap(map['player']),
       modifiers: map['modifiers'],
       ally: Player.fromMap(map['ally']),
-      monsters:
-          List<Monster>.from(map['monsters']?.map((x) => Monster.fromMap(x))),
+      monsters: List<Monster>.from(
+          map['monsters']?.map((x) => Monster.fromMap(x)) ?? <Monster>[]),
       battleFinished: map['battleFinished'],
     );
   }
