@@ -1,9 +1,11 @@
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:munchkin/logic/cubit/game_cubit.dart';
 import 'package:munchkin/logic/cubit/settings_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:munchkin/models/models.dart';
 import 'package:munchkin/ui/components/button.dart';
+import 'package:munchkin/ui/helper.dart';
 
 class SettingsPage extends StatelessWidget {
   @override
@@ -21,19 +23,9 @@ class SettingsPage extends StatelessWidget {
         SliverList(
           delegate: SliverChildListDelegate([
             Padding(
-              padding: EdgeInsets.symmetric(horizontal: 16.0),
+              padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
               child: Text(
-                'Appearance',
-                style: context.theme().textTheme.headline6,
-              ),
-            ),
-            ListTile(
-              title: Text('Theme'),
-            ),
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 16.0),
-              child: Text(
-                'Advanced settings',
+                'General',
                 style: context.theme().textTheme.headline6,
               ),
             ),
@@ -68,27 +60,37 @@ class SettingsPage extends StatelessWidget {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
-                          FancyButton(
-                            size: 20,
-                            color: context.theme().accentColor,
-                            child: Text('10'),
-                            onPressed: () =>
-                                context.read<GameCubit>().changeMaxLevel(10),
+                          Spacer(),
+                          Expanded(
+                            child: FancyButton(
+                              size: 20,
+                              color: context.theme().accentColor,
+                              child: Center(child: Text('10')),
+                              onPressed: () =>
+                                  context.read<GameCubit>().changeMaxLevel(10),
+                            ),
                           ),
-                          FancyButton(
-                            size: 20,
-                            color: context.theme().accentColor,
-                            child: Text('20'),
-                            onPressed: () =>
-                                context.read<GameCubit>().changeMaxLevel(20),
+                          Spacer(),
+                          Expanded(
+                            child: FancyButton(
+                              size: 20,
+                              color: context.theme().accentColor,
+                              child: Center(child: Text('20')),
+                              onPressed: () =>
+                                  context.read<GameCubit>().changeMaxLevel(20),
+                            ),
                           ),
-                          FancyButton(
-                            size: 20,
-                            color: context.theme().accentColor,
-                            child: Text('Max'),
-                            onPressed: () =>
-                                context.read<GameCubit>().changeMaxLevel(999),
+                          Spacer(),
+                          Expanded(
+                            child: FancyButton(
+                              size: 20,
+                              color: context.theme().accentColor,
+                              child: Center(child: Text('Max')),
+                              onPressed: () =>
+                                  context.read<GameCubit>().changeMaxLevel(999),
+                            ),
                           ),
+                          Spacer(),
                         ],
                       ),
                     )
@@ -97,10 +99,27 @@ class SettingsPage extends StatelessWidget {
               },
             ),
             Padding(
-              padding: EdgeInsets.symmetric(horizontal: 16.0),
+              padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
               child: Text(
-                'About me',
+                'More',
                 style: context.theme().textTheme.headline6,
+              ),
+            ),
+            ListTile(
+              title: Text('About me'),
+              onTap: () => Helper.showSocialMediaBottomSheet(context),
+            ),
+            ListTile(
+              title: Text('Licenses'),
+              onTap: () => showAboutDialog(
+                context: context,
+                applicationIcon: Icon(
+                  FontAwesomeIcons.diceOne,
+                  color: Colors.white,
+                ),
+                applicationVersion: 'v1.0.0',
+                applicationLegalese:
+                    'Licenses for software used by the application',
               ),
             ),
           ]),

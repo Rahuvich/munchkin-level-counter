@@ -18,7 +18,7 @@ class BlocsListener extends StatelessWidget {
       listenWhen: (prevState, nextState) =>
           !prevState.gameFinished && nextState.gameFinished,
       listener: (context, state) {
-        Navigator.of(context).pushReplacementNamed('finished');
+        Navigator.of(context).pushNamed('finished');
       },
       child: BlocListener<GameCubit, GameState>(
         // * Trigger when game restarts

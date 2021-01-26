@@ -21,6 +21,8 @@ class AppTheme {
     ThemeData baseTheme = isLight ? ThemeData.light() : ThemeData.dark();
 
     return baseTheme.copyWith(
+        cardColor:
+            isLight ? kSecondaryBackgroundColor : kSecondaryBackgroundColorDark,
         bottomAppBarColor: isLight ? kPrimaryColor : kPrimaryColorDark,
         scaffoldBackgroundColor:
             isLight ? kSecondaryBackgroundColor : kSecondaryBackgroundColorDark,

@@ -19,7 +19,7 @@ class BattlePage extends StatelessWidget {
           pinned: true,
           backgroundColor: context.theme().scaffoldBackgroundColor,
           leading: IconButton(
-            icon: Icon(Icons.arrow_back_ios),
+            icon: Icon(Icons.arrow_back_ios_rounded),
             onPressed: () => onBack.call(),
           ),
           title: Text(

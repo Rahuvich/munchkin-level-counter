@@ -39,7 +39,7 @@ class GameCubit extends HydratedCubit<GameState> with ReplayCubitMixin {
 
     emit(this.state.copyWith(players: List.unmodifiable(list)));
 
-    if (newLevel == this.state.maxLevelTrigger)
+    if (newLevel >= this.state.maxLevelTrigger)
       emit(this.state.copyWith(gameFinished: true));
   }
 
