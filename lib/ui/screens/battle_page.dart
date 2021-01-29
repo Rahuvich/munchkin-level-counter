@@ -30,55 +30,60 @@ class BattlePage extends StatelessWidget {
           ),
         ),
         SliverFillRemaining(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              Expanded(child: PlayerInBattle()),
-              Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 20),
-                  child: ScoreBattle()),
-              Expanded(child: MonstersInBattle()),
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 30),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    FancyButton(
-                      child: Text(
-                        'Add monster',
-                        style: context.theme().textTheme.bodyText1,
-                      ),
-                      size: 30,
-                      color: context.theme().accentColor,
-                      onPressed: () => context.read<BattleCubit>().addMonster(),
-                    ),
-                    FancyButton(
-                      onPressed: () {
-                        Helper.showConfirmDialog(
-                            title: state.playerStrength > state.monstersStrength
-                                ? '${state.player.name} wins'
-                                : '${state.player.name} loses',
-                            destructive: true,
-                            context: context,
-                            onConfirm: () {
-                              context.read<BattleCubit>().endBattle();
-                              onBack.call();
-                            });
-                      },
-                      child: Text(
-                        'End battle',
-                        style: context.theme().textTheme.bodyText1,
-                      ),
-                      size: 30,
-                      color: context.theme().errorColor,
-                    ),
-                  ],
+          child: SingleChildScrollView(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                PlayerInBattle(),
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 10.0),
+                  child: ScoreBattle(),
                 ),
-              ),
-              SizedBox(
-                height: kToolbarHeight * 2,
-              )
-            ],
+                MonstersInBattle(),
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 30),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      FancyButton(
+                        child: Text(
+                          'Add monster',
+                          style: context.theme().textTheme.bodyText1,
+                        ),
+                        size: 30,
+                        color: context.theme().accentColor,
+                        onPressed: () =>
+                            context.read<BattleCubit>().addMonster(),
+                      ),
+                      FancyButton(
+                        onPressed: () {
+                          Helper.showConfirmDialog(
+                              title:
+                                  state.playerStrength > state.monstersStrength
+                                      ? '${state.player.name} wins'
+                                      : '${state.player.name} loses',
+                              destructive: true,
+                              context: context,
+                              onConfirm: () {
+                                context.read<BattleCubit>().endBattle();
+                                onBack.call();
+                              });
+                        },
+                        child: Text(
+                          'End battle',
+                          style: context.theme().textTheme.bodyText1,
+                        ),
+                        size: 30,
+                        color: context.theme().errorColor,
+                      ),
+                    ],
+                  ),
+                ),
+                SizedBox(
+                  height: kToolbarHeight * 1.5,
+                )
+              ],
+            ),
           ),
         ),
       ],

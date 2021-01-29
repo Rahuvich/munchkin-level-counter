@@ -17,60 +17,63 @@ class PlayerInBattle extends StatelessWidget {
         context.select<BattleCubit, Player>((cubit) => cubit.state.ally);
     int modifiersNum =
         context.select<BattleCubit, int>((cubit) => cubit.state.modifiers);
-    return GlassCard(
-      child: Column(
-        children: [
-          SizedBox(
-            height: 10,
-          ),
-          Row(
-            children: [
-              FancyButton(
-                color: context.theme().accentColor,
-                size: 20,
-                onPressed: () =>
-                    context.read<GameCubit>().toggleGenderOfPlayer(player.id),
-                child: Icon(
-                  player.gender == Gender.MALE
-                      ? FontAwesomeIcons.mars
-                      : FontAwesomeIcons.venus,
-                  key: Key(BattlePagePlayerGender),
-                  color: player.gender == Gender.MALE
-                      ? Colors.blueAccent
-                      : Colors.pinkAccent,
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 8.0),
+      child: GlassCard(
+        child: Column(
+          children: [
+            SizedBox(
+              height: 10,
+            ),
+            Row(
+              children: [
+                FancyButton(
+                  color: context.theme().accentColor,
+                  size: 20,
+                  onPressed: () =>
+                      context.read<GameCubit>().toggleGenderOfPlayer(player.id),
+                  child: Icon(
+                    player.gender == Gender.MALE
+                        ? FontAwesomeIcons.mars
+                        : FontAwesomeIcons.venus,
+                    key: Key(BattlePagePlayerGender),
+                    color: player.gender == Gender.MALE
+                        ? Colors.blueAccent
+                        : Colors.pinkAccent,
+                  ),
                 ),
-              ),
-              SizedBox(
-                width: 20,
-              ),
-              Expanded(
-                child: Text(
-                  allyPlayer == null
-                      ? player.name
-                      : '${player.name} x ${allyPlayer.name}',
-                  key: Key(BattlePagePlayerName),
-                  style: context.theme().textTheme.bodyText1,
+                SizedBox(
+                  width: 20,
                 ),
-              ),
-            ],
-          ),
-          SizedBox(
-            height: 20,
-          ),
-          level(context, player),
-          SizedBox(
-            height: 10,
-          ),
-          gear(context, player),
-          SizedBox(
-            height: 10,
-          ),
-          modifiers(context, modifiersNum),
-          SizedBox(
-            height: 10,
-          ),
-          ally(context, player, allyPlayer),
-        ],
+                Expanded(
+                  child: Text(
+                    allyPlayer == null
+                        ? player.name
+                        : '${player.name} x ${allyPlayer.name}',
+                    key: Key(BattlePagePlayerName),
+                    style: context.theme().textTheme.bodyText1,
+                  ),
+                ),
+              ],
+            ),
+            SizedBox(
+              height: 20,
+            ),
+            level(context, player),
+            SizedBox(
+              height: 10,
+            ),
+            gear(context, player),
+            SizedBox(
+              height: 10,
+            ),
+            modifiers(context, modifiersNum),
+            SizedBox(
+              height: 10,
+            ),
+            ally(context, player, allyPlayer),
+          ],
+        ),
       ),
     );
   }
@@ -229,16 +232,18 @@ class MonstersInBattle extends StatelessWidget {
   Widget build(BuildContext context) {
     List<Monster> monsters = context
         .select<BattleCubit, List<Monster>>((cubit) => cubit.state.monsters);
-
-    return PageView(
+    return Column(
       children: monsters
           .asMap()
           .map((index, m) => MapEntry(
               index,
-              SingleMonsterInBattle(
-                deleteable: monsters.length > 1,
-                monster: m,
-                index: index + 1,
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 8.0),
+                child: SingleMonsterInBattle(
+                  deleteable: monsters.length > 1,
+                  monster: m,
+                  index: index + 1,
+                ),
               )))
           .values
           .toList(),
@@ -255,6 +260,7 @@ class SingleMonsterInBattle extends StatelessWidget {
   Widget build(BuildContext context) {
     return GlassCard(
       child: Column(
+        mainAxisSize: MainAxisSize.min,
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
           SizedBox(
@@ -270,9 +276,10 @@ class SingleMonsterInBattle extends StatelessWidget {
                       context.read<BattleCubit>().removeMonster(monster.id),
                   child: Icon(Icons.clear),
                 ),
-              SizedBox(
-                width: 20,
-              ),
+              if (deleteable)
+                SizedBox(
+                  width: 20,
+                ),
               Expanded(
                 child: Text(
                   'Monster $index',

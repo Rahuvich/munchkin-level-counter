@@ -110,7 +110,10 @@ void main() {
         (_) => BattleState(player: player, monsters: monsters),
       );
 
-      await tester.pumpWidget(makeTestableWidget(child: MonstersInBattle()));
+      await tester.pumpWidget(makeTestableWidget(
+          child: SingleChildScrollView(
+        child: MonstersInBattle(),
+      )));
 
       await tester.pumpAndSettle();
 
@@ -136,7 +139,8 @@ void main() {
           expect(entry.key, findsOneWidget);
           expect((entry.key.evaluate().first.widget as Text).data, entry.value);
         }
-        await tester.drag(find.byType(PageView), Offset(-500, 0.0));
+        await tester.drag(
+            find.byType(SingleChildScrollView), Offset(0, -500.0));
         await tester.pumpAndSettle();
       }
     });
