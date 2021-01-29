@@ -6,6 +6,7 @@ import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:munchkin/logic/cubit/battle_cubit.dart';
 import 'package:munchkin/ui/components/bloc_listener.dart';
+import 'package:munchkin/ui/icons/munchkin_icons.dart';
 import 'package:munchkin/ui/screens/battle_page.dart';
 import 'package:munchkin/ui/screens/players_page.dart';
 import 'package:munchkin/models/models.dart';
@@ -51,6 +52,7 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      extendBody: true,
       body: BlocsListener(
         child: PageView(
           children: screens,
@@ -64,7 +66,8 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
       floatingActionButton: FloatingActionButton(
         child: Icon(
-          diceIcon,
+          Munchkin.munchkin_dice,
+          /* diceIcon, */
           color: Colors.white,
           size: 30,
         ),

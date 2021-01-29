@@ -6,6 +6,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:munchkin/models/models.dart';
 import 'package:munchkin/ui/components/button.dart';
 import 'package:munchkin/ui/helper.dart';
+import 'package:munchkin/ui/icons/munchkin_icons.dart';
 
 class SettingsPage extends StatelessWidget {
   @override
@@ -114,7 +115,7 @@ class SettingsPage extends StatelessWidget {
               onTap: () => showAboutDialog(
                 context: context,
                 applicationIcon: Icon(
-                  FontAwesomeIcons.diceOne,
+                  Munchkin.munchkin_dice,
                   color: Colors.white,
                 ),
                 applicationVersion: 'v1.0.0',

@@ -75,6 +75,9 @@ class BattlePage extends StatelessWidget {
                   ],
                 ),
               ),
+              SizedBox(
+                height: kToolbarHeight * 2,
+              )
             ],
           ),
         ),

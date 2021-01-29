@@ -70,9 +70,6 @@ class PlayerInBattle extends StatelessWidget {
             height: 10,
           ),
           ally(context, player, allyPlayer),
-          SizedBox(
-            height: 10,
-          ),
         ],
       ),
     );
