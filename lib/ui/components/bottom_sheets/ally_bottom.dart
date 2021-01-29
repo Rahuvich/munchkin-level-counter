@@ -65,7 +65,7 @@ class PlayersBottomSheet extends StatelessWidget {
                           ),
                         ),
                       ),
-                      title: Text('No ally',
+                      title: Text('None',
                           style: context.theme().textTheme.bodyText1),
                     )),
             ),

@@ -22,11 +22,14 @@ void main() async {
   HydratedBloc.storage = await HydratedStorage.build(
     storageDirectory: await getApplicationDocumentsDirectory(),
   );
+  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
+
   Bloc.observer = GameObserver();
   GameCubit gameCubit = GameCubit();
   BattleCubit battleCubit = BattleCubit(gameCubit: gameCubit);
   AchievementsCubit achievementsCubit =
       AchievementsCubit(battleCubit: battleCubit);
+
   runApp(MyApp(
     gameCubit: gameCubit,
     battleCubit: battleCubit,

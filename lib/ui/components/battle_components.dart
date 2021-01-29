@@ -4,7 +4,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:munchkin/logic/cubit/battle_cubit.dart';
 import 'package:munchkin/logic/cubit/game_cubit.dart';
 import 'package:munchkin/models/models.dart';
-import 'package:munchkin/ui/components/ally_bottom.dart';
+import 'package:munchkin/ui/components/bottom_sheets/ally_bottom.dart';
 import 'package:munchkin/ui/components/button.dart';
 import 'package:munchkin/ui/keys/widget_keys.dart';
 

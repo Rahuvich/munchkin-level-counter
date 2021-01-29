@@ -6,7 +6,7 @@ import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:munchkin/logic/cubit/battle_cubit.dart';
 import 'package:munchkin/ui/components/bloc_listener.dart';
-import 'package:munchkin/ui/icons/munchkin_icons.dart';
+import 'package:munchkin/ui/animations/dice.dart';
 import 'package:munchkin/ui/screens/battle_page.dart';
 import 'package:munchkin/ui/screens/players_page.dart';
 import 'package:munchkin/models/models.dart';
@@ -64,16 +64,7 @@ class _MyHomePageState extends State<MyHomePage> {
           controller: _pageController,
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        child: Icon(
-          Munchkin.munchkin_dice,
-          /* diceIcon, */
-          color: Colors.white,
-          size: 30,
-        ),
-        backgroundColor: context.theme().accentColor,
-        onPressed: throwDice,
-      ),
+      floatingActionButton: MagicDiceButton(),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       bottomNavigationBar: BottomAppBar(
         color: context.theme().bottomAppBarColor,
