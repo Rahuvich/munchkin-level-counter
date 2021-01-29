@@ -8,7 +8,7 @@
              <uses-permission android:name="android.permission.VIBRATE" />
     <application
         android:name="io.flutter.app.FlutterApplication"
-        android:label="munchkin"
+        android:label="Munchkin Level Counter"
         android:icon="@mipmap/launcher_icon">
         <activity
             android:name=".MainActivity"
