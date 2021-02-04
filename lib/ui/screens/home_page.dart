@@ -13,6 +13,8 @@ import 'package:munchkin/models/models.dart';
 import 'package:munchkin/ui/screens/settings_page.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../helper.dart';
+
 class MyHomePage extends StatefulWidget {
   MyHomePage({Key key}) : super(key: key);
 
@@ -51,47 +53,54 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      extendBody: true,
-      body: BlocsListener(
-        child: PageView(
-          children: screens,
-          onPageChanged: (index) => setState(() {
-            FocusScope.of(context).unfocus();
-            currentPage = index;
-          }),
-          physics: NeverScrollableScrollPhysics(),
-          controller: _pageController,
+    return WillPopScope(
+      onWillPop: () async {
+        return await Helper.showConfirmDialog(
+                title: 'Exit the app', destructive: true, context: context) ??
+            Future.value(false);
+      },
+      child: Scaffold(
+        extendBody: true,
+        body: BlocsListener(
+          child: PageView(
+            children: screens,
+            onPageChanged: (index) => setState(() {
+              FocusScope.of(context).unfocus();
+              currentPage = index;
+            }),
+            physics: NeverScrollableScrollPhysics(),
+            controller: _pageController,
+          ),
         ),
-      ),
-      floatingActionButton: MagicDiceButton(),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      bottomNavigationBar: BottomAppBar(
-        color: context.theme().bottomAppBarColor,
-        shape: CircularNotchedRectangle(),
-        notchMargin: 7.0,
-        child: Container(
-          height: kToolbarHeight,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              IconButton(
-                  icon: Icon(CupertinoIcons.person_2_fill),
-                  color: currentPage == 0
-                      ? Colors.white
-                      : context.theme().disabledColor,
-                  onPressed: () => _pageController.jumpToPage(
-                        0,
-                      )),
-              IconButton(
-                  icon: Icon(
-                    CupertinoIcons.settings,
-                  ),
-                  color: currentPage == 2
-                      ? Colors.white
-                      : context.theme().disabledColor,
-                  onPressed: () => _pageController.jumpToPage(2)),
-            ],
+        floatingActionButton: MagicDiceButton(),
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+        bottomNavigationBar: BottomAppBar(
+          color: context.theme().bottomAppBarColor,
+          shape: CircularNotchedRectangle(),
+          notchMargin: 7.0,
+          child: Container(
+            height: kToolbarHeight,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                IconButton(
+                    icon: Icon(CupertinoIcons.person_2_fill),
+                    color: currentPage == 0
+                        ? Colors.white
+                        : context.theme().disabledColor,
+                    onPressed: () => _pageController.jumpToPage(
+                          0,
+                        )),
+                IconButton(
+                    icon: Icon(
+                      CupertinoIcons.settings,
+                    ),
+                    color: currentPage == 2
+                        ? Colors.white
+                        : context.theme().disabledColor,
+                    onPressed: () => _pageController.jumpToPage(2)),
+              ],
+            ),
           ),
         ),
       ),

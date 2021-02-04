@@ -25,13 +25,13 @@ class Helper {
             builder: (context) => SocialMediaSheet()));
   }
 
-  static void showConfirmDialog(
+  static Future<bool> showConfirmDialog(
       {BuildContext context,
       String title,
       VoidCallback onConfirm,
       VoidCallback onDismissed,
       bool destructive}) {
-    showDialog(
+    return showDialog(
         context: context,
         builder: (context) {
           return AlertDialog(
@@ -55,7 +55,7 @@ class Helper {
                   ),
                 ),
                 onPressed: () {
-                  Navigator.pop(context);
+                  Navigator.of(context).pop(false);
                   onDismissed?.call();
                 },
               ),
@@ -74,8 +74,8 @@ class Helper {
                   ),
                 ),
                 onPressed: () {
-                  Navigator.pop(context);
-                  onConfirm.call();
+                  Navigator.of(context).pop(true);
+                  onConfirm?.call();
                 },
               )
             ],
