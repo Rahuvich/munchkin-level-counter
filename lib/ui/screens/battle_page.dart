@@ -15,78 +15,84 @@ class BattlePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final state = context.watch<BattleCubit>().state;
-    return CustomScrollView(
-      slivers: [
-        SliverAppBar(
-          pinned: true,
-          backgroundColor: context.theme().scaffoldBackgroundColor,
-          leading: IconButton(
-            icon: Icon(Icons.arrow_back_ios_rounded),
-            onPressed: () => onBack.call(),
-          ),
-          title: Text(
-            'Battle',
-            style: context.theme().textTheme.headline3,
-          ),
-        ),
-        SliverFillRemaining(
-          child: SingleChildScrollView(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                PlayerInBattle(),
-                Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 10.0),
-                  child: ScoreBattle(),
-                ),
-                MonstersInBattle(),
-                Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 30),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      FancyButton(
-                        child: Text(
-                          'Add monster',
-                          style: context.theme().textTheme.bodyText1,
-                        ),
-                        size: 30,
-                        color: context.theme().accentColor,
-                        onPressed: () =>
-                            context.read<BattleCubit>().addMonster(),
-                      ),
-                      FancyButton(
-                        onPressed: () {
-                          Helper.showConfirmDialog(
-                              title:
-                                  state.playerStrength > state.monstersStrength
-                                      ? '${state.player.name} wins'
-                                      : '${state.player.name} loses',
-                              destructive: true,
-                              context: context,
-                              onConfirm: () {
-                                context.read<BattleCubit>().endBattle();
-                                onBack.call();
-                              });
-                        },
-                        child: Text(
-                          'End battle',
-                          style: context.theme().textTheme.bodyText1,
-                        ),
-                        size: 30,
-                        color: context.theme().errorColor,
-                      ),
-                    ],
-                  ),
-                ),
-                SizedBox(
-                  height: kToolbarHeight * 1.5,
-                )
-              ],
+    return WillPopScope(
+      onWillPop: () {
+        onBack.call();
+        return Future.value(false);
+      },
+      child: CustomScrollView(
+        slivers: [
+          SliverAppBar(
+            pinned: true,
+            backgroundColor: context.theme().scaffoldBackgroundColor,
+            leading: IconButton(
+              icon: Icon(Icons.arrow_back_ios_rounded),
+              onPressed: () => onBack.call(),
+            ),
+            title: Text(
+              'Battle',
+              style: context.theme().textTheme.headline3,
             ),
           ),
-        ),
-      ],
+          SliverFillRemaining(
+            child: SingleChildScrollView(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  PlayerInBattle(),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 10.0),
+                    child: ScoreBattle(),
+                  ),
+                  MonstersInBattle(),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 30),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        FancyButton(
+                          child: Text(
+                            'Add monster',
+                            style: context.theme().textTheme.bodyText1,
+                          ),
+                          size: 30,
+                          color: context.theme().accentColor,
+                          onPressed: () =>
+                              context.read<BattleCubit>().addMonster(),
+                        ),
+                        FancyButton(
+                          onPressed: () {
+                            Helper.showConfirmDialog(
+                                title: state.playerStrength >
+                                        state.monstersStrength
+                                    ? '${state.player.name} wins'
+                                    : '${state.player.name} loses',
+                                destructive: true,
+                                context: context,
+                                onConfirm: () {
+                                  context.read<BattleCubit>().endBattle();
+                                  onBack.call();
+                                });
+                          },
+                          child: Text(
+                            'End battle',
+                            style: context.theme().textTheme.bodyText1,
+                          ),
+                          size: 30,
+                          color: context.theme().errorColor,
+                        ),
+                      ],
+                    ),
+                  ),
+                  SizedBox(
+                    height: kToolbarHeight * 1.5,
+                  )
+                ],
+              ),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

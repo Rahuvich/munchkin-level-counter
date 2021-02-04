@@ -146,7 +146,8 @@ class EndGamePage extends StatelessWidget {
                   color: context.theme().accentColor,
                   onPressed: () {
                     gameCubit.resetPlayers();
-                    Navigator.of(context).pushReplacementNamed('/');
+                    Navigator.of(context)
+                        .pushNamedAndRemoveUntil('/', (_) => false);
                   },
                 ),
               ),

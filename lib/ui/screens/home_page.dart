@@ -97,26 +97,4 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
     );
   }
-
-  IconData get diceIcon {
-    if (dice == 1)
-      return FontAwesomeIcons.diceOne;
-    else if (dice == 2)
-      return FontAwesomeIcons.diceTwo;
-    else if (dice == 3)
-      return FontAwesomeIcons.diceThree;
-    else if (dice == 4)
-      return FontAwesomeIcons.diceFour;
-    else if (dice == 5)
-      return FontAwesomeIcons.diceFive;
-    else
-      return FontAwesomeIcons.diceSix;
-  }
-
-  void throwDice() {
-    HapticFeedback.heavyImpact();
-    setState(() {
-      dice = new Random().nextInt(6) + 1;
-    });
-  }
 }

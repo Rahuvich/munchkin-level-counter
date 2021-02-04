@@ -41,7 +41,7 @@ class _MagicDiceButtonState extends State<MagicDiceButton> {
         curve: Curves.bounceInOut,
         size: sizeIcon,
       ),
-      onPressed: throwDice,
+      onPressed: isLoading ? null : throwDice,
     );
   }
 
