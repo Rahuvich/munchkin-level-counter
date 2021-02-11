@@ -1,0 +1,14 @@
+{
+    "title": "Munchkin Level Counter",
+    "version": "1.0",
+    "url": "https://play.google.com/store/apps/details?id=dev.raulmabe.munchkin",
+    "tag_tools": ["flutter", "bloc", "tests"],
+    "platforms": ["Android","iOS"],
+    "link": "https://play.google.com/store/apps/details?id=dev.raulmabe.munchkin", 
+    "link_text": "Get it on PlayStore",
+  
+    "assets": ["https://res.cloudinary.com/mabe-portfolio/video/upload/v1613072996/munchkin/output_qcln7t.webm", "anotherlink"],
+    "assets_is_vertical": [true], 
+    "assets_is_image": [false],
+    "assets_platform": ["mobile"]
+  }
